@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.github.colinjeremie.willyoufindit.fragments.SearchFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/result_recycler_view"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/error_view"
+
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_music_note_black_24px"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:contentDescription="@string/error_no_result" />
+
+        <TextView
+            android:textSize="25sp"
+            android:text="@string/error_no_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>
