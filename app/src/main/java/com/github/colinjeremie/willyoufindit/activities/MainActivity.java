@@ -1,7 +1,9 @@
-package com.github.colinjeremie.willyoufindit;
+package com.github.colinjeremie.willyoufindit.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.github.colinjeremie.willyoufindit.R;
 
 public class MainActivity extends AppCompatActivity {
 

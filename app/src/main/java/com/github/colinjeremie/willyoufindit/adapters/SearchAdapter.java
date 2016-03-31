@@ -26,6 +26,10 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public static final int ALBUM_TYPE = 2;
     public static final int ARTIST_TYPE = 3;
 
+    private OnAlbumClickListener mAlbumClickListener;
+    private OnTrackClickListener mTrackClickListener;
+    private OnArtistClickListener mArtistListener;
+
     private List<Track> mTracks;
     private List<Album> mAlbums;
     private List<Artist> mArtists;
@@ -94,10 +98,14 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private void bindArtistViewHolder(ArtistViewHolder holder, int position) {
+    private Artist getArtistFromAdapterPosition(int position){
         position -= 3;
         position -= mTracks.size() + mAlbums.size();
-        Artist model = mArtists.get(position);
+        return position >= 0 ? mArtists.get(position) : null;
+    }
+
+    private void bindArtistViewHolder(ArtistViewHolder holder, int position) {
+        Artist model = getArtistFromAdapterPosition(position);
 
         Glide
                 .with(holder.itemView.getContext())
@@ -106,10 +114,14 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         holder.mName.setText(model.getName());
     }
 
-    private void bindAlbumViewHolder(AlbumViewHolder holder, int position) {
+    private Album getAlbumFromAdapterPosition(int position){
         position -= 2;
         position -= mTracks.size();
-        Album model = mAlbums.get(position);
+        return position >= 0 ? mAlbums.get(position) : null;
+    }
+
+    private void bindAlbumViewHolder(AlbumViewHolder holder, int position) {
+        Album model = getAlbumFromAdapterPosition(position);
 
         Glide
                 .with(holder.itemView.getContext())
@@ -119,9 +131,12 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         holder.mAlbumName.setText(model.getTitle());
     }
 
+    private Track getTrackFromAdapterPosition(int position){
+        return position >= 0 ? mTracks.get(position - 1) : null;
+    }
+
     private void bindTrackViewHolder(TrackViewHolder holder, int position) {
-        position--;
-        Track model = mTracks.get(position);
+        Track model = getTrackFromAdapterPosition(position);
 
         Glide
                 .with(holder.itemView.getContext())
@@ -179,6 +194,15 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             mArtistName = (TextView) itemView.findViewById(R.id.track_artist_name);
             mTrackTitle = (TextView) itemView.findViewById(R.id.track_artist_track);
             mTrackImage = (ImageView) itemView.findViewById(R.id.track_preview);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mTrackClickListener != null){
+                        mTrackClickListener.onTrackClick(getTrackFromAdapterPosition(getAdapterPosition()));
+                    }
+                }
+            });
         }
     }
 
@@ -189,9 +213,19 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public AlbumViewHolder(View itemView) {
             super(itemView);
+
             mAlbumName = (TextView) itemView.findViewById(R.id.album_album_name);
             mArtistName = (TextView) itemView.findViewById(R.id.album_artist_name);
             mAlbumPicture = (ImageView) itemView.findViewById(R.id.album_image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mAlbumClickListener != null){
+                        mAlbumClickListener.onAlbumClick(getAlbumFromAdapterPosition(getAdapterPosition()));
+                    }
+                }
+            });
         }
     }
 
@@ -201,8 +235,18 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public ArtistViewHolder(View itemView) {
             super(itemView);
+
             mName = (TextView) itemView.findViewById(R.id.artist_item_artist_name);
             mArtistPicture = (ImageView) itemView.findViewById(R.id.artist_picture);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mArtistListener != null){
+                        mArtistListener.onArtistClick(getArtistFromAdapterPosition(getAdapterPosition()));
+                    }
+                }
+            });
         }
     }
 
@@ -213,5 +257,30 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(itemView);
             mTitle = (TextView) itemView.findViewById(R.id.section_title);
         }
+    }
+
+    public void setAlbumClickListener(OnAlbumClickListener pAlbumclicklistener) {
+        mAlbumClickListener = pAlbumclicklistener;
+    }
+
+    public void setTrackClickListener(OnTrackClickListener pTrackclicklistener) {
+        mTrackClickListener = pTrackclicklistener;
+    }
+
+    public void setArtistsListener(OnArtistClickListener pArtistslistener) {
+        mArtistListener = pArtistslistener;
+    }
+
+
+    public interface OnTrackClickListener{
+        void onTrackClick(Track pTrack);
+    }
+
+    public interface OnArtistClickListener{
+        void onArtistClick(Artist pArtist);
+    }
+
+    public interface OnAlbumClickListener{
+        void onAlbumClick(Album pAlbum);
     }
 }

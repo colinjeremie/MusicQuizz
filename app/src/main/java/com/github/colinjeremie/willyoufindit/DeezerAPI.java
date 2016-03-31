@@ -63,15 +63,17 @@ public class DeezerAPI {
         mDeezerConnect.requestAsync(request, pRequestListener);
     }
 
-    public TrackPlayer playTrack(Application pApplication, long pTrackId) throws DeezerError, TooManyPlayersExceptions {
-        TrackPlayer trackPlayer = new TrackPlayer(pApplication, mDeezerConnect, new WifiAndMobileNetworkStateChecker());
-        trackPlayer.playTrack(pTrackId);
-
-        return trackPlayer;
+    public TrackPlayer getTrackPlayer(Application pApplication) throws DeezerError, TooManyPlayersExceptions {
+        return new TrackPlayer(pApplication, mDeezerConnect, new WifiAndMobileNetworkStateChecker());
     }
 
     public void autocomplete(String pName, RequestListener pRequestListener){
         DeezerRequest request = DeezerRequestFactory.requestSearchAutocomplete(pName);
+        mDeezerConnect.requestAsync(request, pRequestListener);
+    }
+
+    public void getAlbumFromId(long pAlbumId, RequestListener pRequestListener){
+        DeezerRequest request = DeezerRequestFactory.requestAlbum(pAlbumId);
         mDeezerConnect.requestAsync(request, pRequestListener);
     }
 }

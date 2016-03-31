@@ -13,4 +13,7 @@
     <string name="search_track_section">Tracks</string>
     <string name="search_artist_section">Artists</string>
     <string name="search_album_section">Albums</string>
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
+    <string name="pause">Pause</string>
 </resources>

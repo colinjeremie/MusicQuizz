@@ -1,11 +1,13 @@
 package com.github.colinjeremie.willyoufindit.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,15 +23,20 @@ import com.deezer.sdk.network.request.event.JsonRequestListener;
 import com.deezer.sdk.network.request.event.RequestListener;
 import com.github.colinjeremie.willyoufindit.DeezerAPI;
 import com.github.colinjeremie.willyoufindit.R;
+import com.github.colinjeremie.willyoufindit.activities.AlbumActivity;
 import com.github.colinjeremie.willyoufindit.adapters.SearchAdapter;
 
 import java.util.List;
 
-public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener {
+public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener, SearchAdapter.OnAlbumClickListener, SearchAdapter.OnTrackClickListener {
 
+    private static final String TAG = "SEARCH_FRAGMENT";
+
+    private View mPlayerView;
     private View mErrorView;
     private RecyclerView mResultView;
     private SearchAdapter mSearchAdapter;
+    private PlayerFragment mPlayerFragment;
 
     private RequestListener mAutoCompleteListener = new JsonRequestListener() {
         @Override
@@ -69,6 +76,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         setHasOptionsMenu(true);
+
         return view;
     }
 
@@ -76,13 +84,17 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mPlayerFragment = (PlayerFragment) getChildFragmentManager().findFragmentById(R.id.player_fragment);
         mErrorView = view.findViewById(R.id.error_view);
+        mPlayerView = view.findViewById(R.id.player);
         mResultView = (RecyclerView) view.findViewById(R.id.result_recycler_view);
 
         mSearchAdapter = new SearchAdapter();
         mResultView.setAdapter(mSearchAdapter);
         mSearchAdapter.setHeadersSection(getResources().getStringArray(R.array.search_sections_array));
         mResultView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mSearchAdapter.setAlbumClickListener(this);
+        mSearchAdapter.setTrackClickListener(this);
     }
 
     @Override
@@ -123,5 +135,20 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private void hideErrorView() {
         mResultView.setVisibility(View.VISIBLE);
         mErrorView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onAlbumClick(Album pAlbum) {
+        Intent intent = new Intent(getActivity(), AlbumActivity.class);
+        intent.putExtra(AlbumActivity.ALBUM, pAlbum);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTrackClick(Track pTrack) {
+        Log.d(TAG, "Click on track : " + pTrack.getTitle());
+        mPlayerView.setVisibility(View.VISIBLE);
+        mPlayerFragment.setTrack(pTrack);
+        mPlayerFragment.playTrack();
     }
 }
