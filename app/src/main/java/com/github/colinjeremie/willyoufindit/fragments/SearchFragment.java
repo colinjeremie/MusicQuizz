@@ -32,7 +32,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     private static final String TAG = "SEARCH_FRAGMENT";
 
-    private View mPlayerView;
     private View mErrorView;
     private RecyclerView mResultView;
     private SearchAdapter mSearchAdapter;
@@ -86,7 +85,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
         mPlayerFragment = (PlayerFragment) getChildFragmentManager().findFragmentById(R.id.player_fragment);
         mErrorView = view.findViewById(R.id.error_view);
-        mPlayerView = view.findViewById(R.id.player);
         mResultView = (RecyclerView) view.findViewById(R.id.result_recycler_view);
 
         mSearchAdapter = new SearchAdapter();
@@ -147,7 +145,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     @Override
     public void onTrackClick(Track pTrack) {
         Log.d(TAG, "Click on track : " + pTrack.getTitle());
-        mPlayerView.setVisibility(View.VISIBLE);
         mPlayerFragment.setTrack(pTrack);
         mPlayerFragment.playTrack();
     }

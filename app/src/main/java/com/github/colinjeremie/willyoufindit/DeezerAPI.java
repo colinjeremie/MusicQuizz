@@ -31,6 +31,7 @@ public class DeezerAPI {
     };
 
     private static DeezerAPI _instance = null;
+    private TrackPlayer mTrackPlayer;
 
     public static DeezerAPI getInstance(Context pContext){
         if (_instance == null){
@@ -64,7 +65,10 @@ public class DeezerAPI {
     }
 
     public TrackPlayer getTrackPlayer(Application pApplication) throws DeezerError, TooManyPlayersExceptions {
-        return new TrackPlayer(pApplication, mDeezerConnect, new WifiAndMobileNetworkStateChecker());
+        if (mTrackPlayer == null) {
+            mTrackPlayer = new TrackPlayer(pApplication, mDeezerConnect, new WifiAndMobileNetworkStateChecker());
+        }
+        return mTrackPlayer;
     }
 
     public void autocomplete(String pName, RequestListener pRequestListener){

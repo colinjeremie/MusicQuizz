@@ -8,20 +8,14 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/result_recycler_view"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/result_recycler_view"
 
-        android:padding="16dp"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"/>
-
-        <FrameLayout
-            android:id="@+id/player"
-
-            android:visibility="gone"
+            android:padding="16dp"
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"/>
+
         <fragment
             android:id="@+id/player_fragment"
 
@@ -29,7 +23,6 @@
             android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="100dp"/>
-        </FrameLayout>
     </LinearLayout>
 
     <LinearLayout

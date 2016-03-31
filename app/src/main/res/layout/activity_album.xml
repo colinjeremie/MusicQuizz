@@ -16,18 +16,11 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
-    <FrameLayout
-        android:id="@+id/player"
+    <fragment
+        android:id="@+id/player_fragment"
 
-        android:visibility="gone"
+        android:name="com.github.colinjeremie.willyoufindit.fragments.PlayerFragment"
+        android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <fragment
-            android:id="@+id/player_fragment"
-
-            android:name="com.github.colinjeremie.willyoufindit.fragments.PlayerFragment"
-            android:layout_gravity="bottom"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"/>
-    </FrameLayout>
+        android:layout_height="100dp"/>
 </LinearLayout>

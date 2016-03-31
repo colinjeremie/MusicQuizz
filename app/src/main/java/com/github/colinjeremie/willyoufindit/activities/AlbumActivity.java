@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.deezer.sdk.model.Album;
 import com.deezer.sdk.model.Track;
@@ -23,7 +22,6 @@ public class AlbumActivity extends AppCompatActivity implements SearchAdapter.On
     public static final String ALBUM = "ALBUM";
     private static final String TAG = "ALBUM_ACTIVITY";
 
-    private View mPlayerView;
     private Album mAlbum;
     private RecyclerView mResultView;
     private SearchAdapter mSearchAdapter;
@@ -36,7 +34,6 @@ public class AlbumActivity extends AppCompatActivity implements SearchAdapter.On
 
         mAlbum = getIntent().getParcelableExtra(ALBUM);
         mResultView = (RecyclerView) findViewById(R.id.result_recycler_view);
-        mPlayerView = findViewById(R.id.player);
         mPlayerFragment = (PlayerFragment) getSupportFragmentManager().findFragmentById(R.id.player_fragment);
 
         mSearchAdapter = new SearchAdapter();
@@ -73,7 +70,6 @@ public class AlbumActivity extends AppCompatActivity implements SearchAdapter.On
     @Override
     public void onTrackClick(Track pTrack) {
         Log.d(TAG, "Click on track : " + pTrack.getTitle());
-        mPlayerView.setVisibility(View.VISIBLE);
         mPlayerFragment.setTrack(pTrack);
         mPlayerFragment.playTrack();
     }
