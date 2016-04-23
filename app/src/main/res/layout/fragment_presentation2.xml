@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/presentation_title"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/presentation_how_does_it_work" />
+
+    <TextView
+        style="@style/presentation_subtitle"
+
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="start"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/presentation2_choose_a_category" />
+
+    <LinearLayout
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/presentation2_radio_btn"
+
+            android:background="@drawable/my_ripple_effect_color_accent"
+            android:gravity="center_horizontal"
+            android:padding="25dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:text="@string/radios"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/presentation2_genre_btn"
+
+            android:background="@drawable/my_ripple_effect_color_accent"
+            android:gravity="center_horizontal"
+            android:padding="25dp"
+            android:layout_weight="1"
+            android:text="@string/genres"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/frame_container"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

@@ -83,6 +83,12 @@ public class AlbumActivity extends AppCompatActivity implements SearchAdapter.On
     }
 
     @Override
+    public void onBackPressed() {
+        mPlayerFragment.stopTrack();
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home){
             onBackPressed();

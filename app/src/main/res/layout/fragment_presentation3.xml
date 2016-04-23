@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        style="@style/presentation_title"
+
+        android:id="@+id/presentation2_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/presentation3_title" />
+
+    <TextView
+        style="@style/presentation_subtitle"
+
+        android:id="@+id/presentation2_subtitle"
+
+        android:layout_below="@id/presentation2_title"
+        android:layout_marginBottom="30dp"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/presentation3_subtitle" />
+
+    <Button
+        android:id="@+id/letsplay_btn"
+
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/my_ripple_effect_color_accent"
+        android:text="@string/presentation3_lets_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:id="@+id/player"
+
+        android:layout_below="@id/presentation2_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/player"/>
+    </FrameLayout>
+</RelativeLayout>

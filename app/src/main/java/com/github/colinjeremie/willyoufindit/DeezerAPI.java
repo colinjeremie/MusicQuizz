@@ -80,4 +80,14 @@ public class DeezerAPI {
         DeezerRequest request = DeezerRequestFactory.requestAlbum(pAlbumId);
         mDeezerConnect.requestAsync(request, pRequestListener);
     }
+
+    public void getGenres(RequestListener pRequestListener){
+        DeezerRequest request = DeezerRequestFactory.requestGenres();
+        mDeezerConnect.requestAsync(request, pRequestListener);
+    }
+
+    public void getRadios(RequestListener pRequestListener) {
+        DeezerRequest request = DeezerRequestFactory.requestRadios();
+        mDeezerConnect.requestAsync(request, pRequestListener);
+    }
 }

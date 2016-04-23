@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/genre_name"
+
+    android:clickable="true"
+    android:padding="16dp"
+    android:text="Pop"
+    android:textSize="14sp"
+    android:textColor="#484848"
+    android:background="?attr/selectableItemBackground"
+    android:layout_centerInParent="true"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>

@@ -137,6 +137,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     @Override
     public void onAlbumClick(Album pAlbum) {
+        mPlayerFragment.stopTrack();
         Intent intent = new Intent(getActivity(), AlbumActivity.class);
         intent.putExtra(AlbumActivity.ALBUM, pAlbum);
         startActivity(intent);

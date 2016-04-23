@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.colinjeremie.willyoufindit.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/radio_picture"
+
+        android:contentDescription="@string/radio_item_image_placeholder"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:background="#99000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/radio_name"
+
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</com.github.colinjeremie.willyoufindit.SquareLayout>

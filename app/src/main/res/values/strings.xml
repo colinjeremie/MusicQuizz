@@ -16,4 +16,17 @@
     <string name="play">Play</string>
     <string name="stop">Stop</string>
     <string name="pause">Pause</string>
+
+    <string name="genre_picture">Genre Picture</string>
+    <string name="presentation_title">Welcome in Will you find it</string>
+    <string name="presentation_subtitle">Will You find it is a blind test based on the Deezer database!</string>
+    <string name="presentation_how_does_it_work">How does it work?</string>
+    <string name="presentation2_choose_a_category">Choose a category</string>
+    <string name="presentation3_title">A song is randomly played</string>
+    <string name="presentation3_subtitle">Try to guess the song now!</string>
+
+    <string name="radios">RADIOS</string>
+    <string name="genres">GENRES</string>
+    <string name="radio_item_image_placeholder">Radio Item</string>
+    <string name="presentation3_lets_play">Let\'s play</string>
 </resources>
