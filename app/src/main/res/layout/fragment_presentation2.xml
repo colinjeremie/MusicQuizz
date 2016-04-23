@@ -31,9 +31,9 @@
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/presentation2_radio_btn"
 
-            android:background="@drawable/my_ripple_effect_color_accent"
+            android:background="?attr/selectableItemBackground"
             android:gravity="center_horizontal"
-            android:padding="25dp"
+            android:padding="15dp"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
@@ -44,9 +44,9 @@
             style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/presentation2_genre_btn"
 
-            android:background="@drawable/my_ripple_effect_color_accent"
+            android:background="?attr/selectableItemBackground"
             android:gravity="center_horizontal"
-            android:padding="25dp"
+            android:padding="15dp"
             android:layout_weight="1"
             android:text="@string/genres"
             android:layout_width="0dp"

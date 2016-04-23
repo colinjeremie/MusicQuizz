@@ -26,12 +26,14 @@
         android:text="@string/presentation3_subtitle" />
 
     <Button
+        style="?android:attr/buttonBarButtonStyle"
         android:id="@+id/letsplay_btn"
 
+        android:padding="15dp"
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/my_ripple_effect_color_accent"
+        android:background="?attr/selectableItemBackground"
         android:text="@string/presentation3_lets_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
