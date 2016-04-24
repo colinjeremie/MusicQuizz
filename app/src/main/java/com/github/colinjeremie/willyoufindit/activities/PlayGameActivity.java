@@ -1,13 +1,9 @@
-package com.github.colinjeremie.willyoufindit.fragments;
-
+package com.github.colinjeremie.willyoufindit.activities;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,10 +17,7 @@ import com.github.colinjeremie.willyoufindit.R;
 import java.util.List;
 import java.util.Random;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class PlayGameFragment extends Fragment implements View.OnClickListener {
+public class PlayGameActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String LIST_TRACKS = "LIST_TRACKS";
 
     /**
@@ -62,37 +55,34 @@ public class PlayGameFragment extends Fragment implements View.OnClickListener {
      */
     private TextView mTrackTitleView;
 
-    /**
-     * The root view of the Fragment
-     */
-    private View mRootView;
-
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_play_game, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_play_game);
 
-        if (getArguments() != null) {
-            mList = getArguments().getParcelableArrayList(LIST_TRACKS);
+        if (getIntent() != null) {
+            mList = getIntent().getParcelableArrayListExtra(LIST_TRACKS);
         }
-        mTrackTitleView = (TextView) mRootView.findViewById(R.id.track_title);
-        mTrackArtistView = (TextView) mRootView.findViewById(R.id.track_artist);
+        mTrackTitleView = (TextView) findViewById(R.id.track_title);
+        mTrackArtistView = (TextView) findViewById(R.id.track_artist);
 
-        mPlayBtn = mRootView.findViewById(R.id.play_btn);
-        mPlayBtn.setOnClickListener(this);
-        mPauseBtn = mRootView.findViewById(R.id.pause_btn);
-        mPauseBtn.setOnClickListener(this);
+        mPlayBtn = findViewById(R.id.play_btn);
+        if (mPlayBtn != null) {
+            mPlayBtn.setOnClickListener(this);
+        }
+        mPauseBtn = findViewById(R.id.pause_btn);
+        if (mPauseBtn != null) {
+            mPauseBtn.setOnClickListener(this);
+        }
 
-        mRootView.findViewById(R.id.discover_song_btn).setOnClickListener(this);
-        mRootView.findViewById(R.id.next_song_btn).setOnClickListener(this);
-
-        return mRootView;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        View discoverBtn = findViewById(R.id.discover_song_btn);
+        View nextSongBtn = findViewById(R.id.next_song_btn);
+        if (discoverBtn != null) {
+            discoverBtn.setOnClickListener(this);
+        } if (nextSongBtn != null){
+            nextSongBtn.setOnClickListener(this);
+        }
 
         initPlayer();
         playRandomSong();
@@ -100,7 +90,7 @@ public class PlayGameFragment extends Fragment implements View.OnClickListener {
 
     private void initPlayer() {
         try {
-            mTrackPlayer = DeezerAPI.getInstance(getContext()).getTrackPlayer(getActivity().getApplication());
+            mTrackPlayer = DeezerAPI.getInstance(this).getTrackPlayer(getApplication());
         } catch (DeezerError | TooManyPlayersExceptions deezerError) {
             deezerError.printStackTrace();
             anErrorHappened(deezerError.getLocalizedMessage());
@@ -134,7 +124,7 @@ public class PlayGameFragment extends Fragment implements View.OnClickListener {
     }
 
     private void anErrorHappened(String pMessage) {
-        Toast.makeText(getContext(), pMessage, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, pMessage, Toast.LENGTH_SHORT).show();
     }
 
     private void playRandomSong() {
@@ -151,7 +141,7 @@ public class PlayGameFragment extends Fragment implements View.OnClickListener {
     }
 
     private void endOfGame() {
-        Snackbar.make(mRootView, "All songs have been played. Please go back and choose another radio ;)", Snackbar.LENGTH_LONG);
+        Snackbar.make(this.getWindow().getDecorView(), "All songs have been played. Please go back and choose another radio ;)", Snackbar.LENGTH_LONG);
     }
 
     private void playTrack(Track pTrack) {

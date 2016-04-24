@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.colinjeremie.willyoufindit.R;
-import com.github.colinjeremie.willyoufindit.activities.HomeActivity;
+import com.github.colinjeremie.willyoufindit.activities.PickACategoryActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +23,7 @@ public class PresentationFragmentStep3 extends Fragment {
         rootView.findViewById(R.id.letsplay_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), HomeActivity.class));
+                startActivity(new Intent(getActivity(), PickACategoryActivity.class));
             }
         });
 

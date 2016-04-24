@@ -1,19 +1,16 @@
-package com.github.colinjeremie.willyoufindit.fragments;
+package com.github.colinjeremie.willyoufindit.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.deezer.sdk.model.Radio;
 import com.deezer.sdk.model.Track;
@@ -21,37 +18,35 @@ import com.deezer.sdk.network.request.event.JsonRequestListener;
 import com.github.colinjeremie.willyoufindit.DeezerAPI;
 import com.github.colinjeremie.willyoufindit.R;
 import com.github.colinjeremie.willyoufindit.adapters.RadioAdapter;
-import com.github.colinjeremie.willyoufindit.utils.OnSwitchContentListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RadioFragment extends Fragment implements SearchView.OnQueryTextListener, RadioAdapter.OnRadioItemClickListener {
+public class RadioActivity extends AppCompatActivity implements RadioAdapter.OnRadioItemClickListener, SearchView.OnQueryTextListener {
     private RadioAdapter mAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_genres, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_genre);
 
-        RecyclerView genresView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        genresView.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
+        RecyclerView genresView = (RecyclerView) findViewById(R.id.recycler_view);
         mAdapter = new RadioAdapter();
-        genresView.setAdapter(mAdapter);
+        if (genresView != null) {
+            genresView.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
+            genresView.setAdapter(mAdapter);
 
-        mAdapter.setOnRadioItemClick(this);
-        mAdapter.init(getActivity());
-
-        setHasOptionsMenu(true);
-        return view;
+            mAdapter.setOnRadioItemClick(this);
+            mAdapter.init(this);
+        }
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_search, menu);
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
         initSearchView(menu);
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void initSearchView(Menu menu) {
@@ -90,11 +85,10 @@ public class RadioFragment extends Fragment implements SearchView.OnQueryTextLis
         @Override
         public void onResult(Object o, Object o1) {
             List<Track> tracks = (List<Track>) o;
-            Fragment fragment = new PlayGameFragment();
-            Bundle args = new Bundle();
-            args.putParcelableArrayList(PlayGameFragment.LIST_TRACKS, new ArrayList<Parcelable>(tracks));
-            fragment.setArguments(args);
-            ((OnSwitchContentListener) getActivity()).onSwitchContent(fragment);
+            Intent intent = new Intent(RadioActivity.this, PlayGameActivity.class);
+            intent.putParcelableArrayListExtra(PlayGameActivity.LIST_TRACKS, new ArrayList<Parcelable>(tracks));
+
+            startActivity(intent);
         }
 
         @Override
@@ -110,6 +104,6 @@ public class RadioFragment extends Fragment implements SearchView.OnQueryTextLis
 
     @Override
     public void onRadioItemClick(Radio pRadio) {
-        DeezerAPI.getInstance(getContext()).getRadioTracks(pRadio.getId(), mTrackListener);
+        DeezerAPI.getInstance(this).getRadioTracks(pRadio.getId(), mTrackListener);
     }
 }

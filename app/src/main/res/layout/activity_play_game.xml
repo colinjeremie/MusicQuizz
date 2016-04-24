@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
-    tools:context="com.github.colinjeremie.willyoufindit.fragments.PlayGameFragment">
+    tools:context="com.github.colinjeremie.willyoufindit.activities.PlayGameActivity">
 
     <TextView
         android:id="@+id/track_artist"
@@ -65,7 +65,7 @@
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
             android:text="@string/discover"
-            android:padding="15dp"
+            android:padding="25dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
 
@@ -75,7 +75,7 @@
 
             android:layout_weight="1"
             android:text="@string/next_song"
-            android:padding="15dp"
+            android:padding="25dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
     </LinearLayout>

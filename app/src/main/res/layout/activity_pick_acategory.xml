@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.github.colinjeremie.willyoufindit.activities.HomeActivity">
+    tools:context="com.github.colinjeremie.willyoufindit.activities.PickACategoryActivity">
 
     <TextView
         style="@style/presentation_title"
