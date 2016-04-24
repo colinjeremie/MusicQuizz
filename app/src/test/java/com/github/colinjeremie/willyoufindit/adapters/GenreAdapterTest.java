@@ -25,7 +25,7 @@ public class GenreAdapterTest {
 
     private GenreAdapter mAdapter;
 
-    static private List<Genre> _genres = initDummyData();
+    static private final List<Genre> _genres = initDummyData();
 
     private static List<Genre> initDummyData() {
         List<Genre> list = new ArrayList<>();

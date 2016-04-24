@@ -28,7 +28,7 @@ public class RadioActivity extends AppCompatActivity implements RadioAdapter.OnR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_genre);
+        setContentView(R.layout.activity_radio);
 
         RecyclerView genresView = (RecyclerView) findViewById(R.id.recycler_view);
         mAdapter = new RadioAdapter();

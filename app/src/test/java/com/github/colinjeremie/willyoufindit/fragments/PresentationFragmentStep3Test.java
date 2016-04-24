@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 
 import com.github.colinjeremie.willyoufindit.BuildConfig;
 import com.github.colinjeremie.willyoufindit.R;
-import com.github.colinjeremie.willyoufindit.activities.HomeActivity;
+import com.github.colinjeremie.willyoufindit.activities.PickACategoryActivity;
 import com.github.colinjeremie.willyoufindit.activities.TutoActivity;
 
 import org.junit.Assert;
@@ -29,6 +29,6 @@ public class PresentationFragmentStep3Test {
 
         Assert.assertNotNull(fragment.getView());
         fragment.getView().findViewById(R.id.letsplay_btn).performClick();
-        Assert.assertEquals(activity.getNextStartedActivity().getComponent().getClassName(), HomeActivity.class.getName());
+        Assert.assertEquals(activity.getNextStartedActivity().getComponent().getClassName(), PickACategoryActivity.class.getName());
     }
 }

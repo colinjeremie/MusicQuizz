@@ -28,7 +28,7 @@ public class RadioAdapterTest {
 
     private RadioAdapter mAdapter;
 
-    static private List<Radio> _Radios = initDummyData();
+    static private final List<Radio> _Radios = initDummyData();
 
     private static List<Radio> initDummyData() {
         List<Radio> list = new ArrayList<>();
