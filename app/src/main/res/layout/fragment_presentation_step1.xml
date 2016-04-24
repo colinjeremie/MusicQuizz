@@ -5,18 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo_big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/logo" />
     <TextView
         style="@style/presentation_title"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/presentation_title" />
-
-    <TextView
-        style="@style/presentation_subtitle"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/presentation_subtitle" />
 
 </RelativeLayout>

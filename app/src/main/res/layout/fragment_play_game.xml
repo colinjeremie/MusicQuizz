@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin"
     tools:context="com.github.colinjeremie.willyoufindit.fragments.PlayGameFragment">
-
 
     <TextView
         android:id="@+id/track_artist"
@@ -30,23 +30,23 @@
     <ImageView
         android:id="@+id/play_btn"
 
+        android:visibility="visible"
         android:layout_centerInParent="true"
         android:tint="@color/colorAccent"
         android:background="@null"
-        android:src="@drawable/ic_play_arrow_white_24dp"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:src="@drawable/play"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:contentDescription="@string/play" />
     <ImageView
         android:id="@+id/pause_btn"
 
         android:layout_centerInParent="true"
         android:visibility="gone"
-        android:tint="@color/colorAccent"
         android:background="@null"
-        android:src="@drawable/ic_pause_white_24dp"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:src="@drawable/pause"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:contentDescription="@string/pause" />
 
     <LinearLayout
