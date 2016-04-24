@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.AlbumActivity" />
+        <activity android:name=".activities.HomeActivity"></activity>
     </application>
 
 </manifest>

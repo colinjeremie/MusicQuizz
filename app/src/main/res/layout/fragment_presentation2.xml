@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin"
     android:gravity="center_horizontal"
@@ -10,19 +10,11 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/presentation_how_does_it_work" />
-
-    <TextView
-        style="@style/presentation_subtitle"
-
-        android:layout_marginBottom="30dp"
-        android:layout_gravity="start"
-        android:textColor="@android:color/black"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/presentation2_choose_a_category" />
 
     <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
         android:weightSum="2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -52,9 +44,4 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <FrameLayout
-        android:id="@+id/frame_container"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+</RelativeLayout>

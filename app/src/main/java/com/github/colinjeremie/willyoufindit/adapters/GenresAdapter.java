@@ -21,9 +21,14 @@ import java.util.List;
  * Created by jerem_000 on 4/1/2016.
  */
 public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.GenresViewHolder> {
+
+    private OnGenreItemClickListener mItemClickListener;
+
     private List<Genre> mDataSet = new ArrayList<>();
 
     private RequestListener mListener = new JsonRequestListener() {
+
+        @SuppressWarnings("unchecked")
         @Override
         public void onResult(Object o, Object o1) {
             mDataSet = (List<Genre>) o;
@@ -54,14 +59,26 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.GenresView
 
     @Override
     public void onBindViewHolder(GenresViewHolder holder, int position) {
-        Genre model = mDataSet.get(position);
+        final Genre model = mDataSet.get(position);
 
         holder.mName.setText(model.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mItemClickListener != null){
+                    mItemClickListener.onGenreItemClick(model);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return mDataSet.size();
+    }
+
+    public void setOnGenreItemClick(OnGenreItemClickListener pListener) {
+        this.mItemClickListener = pListener;
     }
 
     public static class GenresViewHolder extends RecyclerView.ViewHolder{
@@ -72,5 +89,9 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.GenresView
 
             mName = (TextView) itemView.findViewById(R.id.genre_name);
         }
+    }
+
+    public interface OnGenreItemClickListener{
+        void onGenreItemClick(Genre pGenre);
     }
 }

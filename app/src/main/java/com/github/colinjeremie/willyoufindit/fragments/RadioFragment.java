@@ -1,6 +1,7 @@
 package com.github.colinjeremie.willyoufindit.fragments;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +15,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.deezer.sdk.model.Radio;
+import com.deezer.sdk.model.Track;
+import com.deezer.sdk.network.request.event.JsonRequestListener;
+import com.github.colinjeremie.willyoufindit.DeezerAPI;
 import com.github.colinjeremie.willyoufindit.R;
 import com.github.colinjeremie.willyoufindit.adapters.RadioAdapter;
+import com.github.colinjeremie.willyoufindit.utils.OnSwitchContentListener;
 
-public class RadioFragment extends Fragment implements SearchView.OnQueryTextListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class RadioFragment extends Fragment implements SearchView.OnQueryTextListener, RadioAdapter.OnRadioItemClickListener {
     private RecyclerView mGenresView;
     private RadioAdapter mAdapter;
 
@@ -27,13 +36,13 @@ public class RadioFragment extends Fragment implements SearchView.OnQueryTextLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_radio, container, false);
+        View view = inflater.inflate(R.layout.fragment_genres, container, false);
 
         mGenresView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mGenresView.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
         mAdapter = new RadioAdapter();
         mGenresView.setAdapter(mAdapter);
-
+        mAdapter.setOnRadioItemClick(this);
         mAdapter.init(getActivity());
 
         setHasOptionsMenu(true);
@@ -76,5 +85,34 @@ public class RadioFragment extends Fragment implements SearchView.OnQueryTextLis
     public boolean onQueryTextChange(String newText) {
         mAdapter.filter(newText);
         return false;
+    }
+
+    private JsonRequestListener mTrackListener = new JsonRequestListener() {
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public void onResult(Object o, Object o1) {
+            List<Track> tracks = (List<Track>) o;
+            Fragment fragment = new PlayGameFragment();
+            Bundle args = new Bundle();
+            args.putParcelableArrayList(PlayGameFragment.LIST_TRACKS, new ArrayList<Parcelable>(tracks));
+            fragment.setArguments(args);
+            ((OnSwitchContentListener) getActivity()).onSwitchContent(fragment);
+        }
+
+        @Override
+        public void onUnparsedResult(String s, Object o) {
+
+        }
+
+        @Override
+        public void onException(Exception e, Object o) {
+
+        }
+    };
+
+    @Override
+    public void onRadioItemClick(Radio pRadio) {
+        DeezerAPI.getInstance(getContext()).getRadioTracks(pRadio.getId(), mTrackListener);
     }
 }

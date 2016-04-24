@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     tools:context="com.github.colinjeremie.willyoufindit.fragments.GenresFragment">
 
+    <TextView
+        style="@style/presentation_title"
+
+        android:id="@+id/genre_fragment_title"
+        android:text="Pick one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
 

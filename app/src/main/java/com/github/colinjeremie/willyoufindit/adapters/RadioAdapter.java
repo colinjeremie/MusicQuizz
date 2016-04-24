@@ -45,6 +45,8 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.RadioViewHol
      * Callback for the Deezer API after fetching the Radios
      */
     private RequestListener mListener = new JsonRequestListener() {
+
+        @SuppressWarnings("unchecked")
         @Override
         public void onResult(Object o, Object o1) {
             mOriginalDataSet = (List<Radio>) o;
@@ -63,6 +65,11 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.RadioViewHol
 
         }
     };
+
+    /**
+     * Callback when an item has been clicked on
+     */
+    private OnRadioItemClickListener mRadioClickListener;
 
     /**
      * Remove all Radios item which already exist in the {@link #mOriginalDataSet} set of values
@@ -93,13 +100,22 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.RadioViewHol
 
     @Override
     public void onBindViewHolder(RadioViewHolder holder, int position) {
-        Radio model = mDataSet.get(position);
+        final Radio model = mDataSet.get(position);
 
         holder.mName.setText(model.getTitle());
         Glide
                 .with(holder.mImage.getContext())
                 .load(model.getPictureUrl())
                 .into(holder.mImage);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mRadioClickListener != null){
+                    mRadioClickListener.onRadioItemClick(model);
+                }
+            }
+        });
     }
 
     /**
@@ -134,6 +150,10 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.RadioViewHol
         mTask.execute(pSearch);
     }
 
+    public void setOnRadioItemClick(OnRadioItemClickListener pListener) {
+        this.mRadioClickListener = pListener;
+    }
+
     /**
      * View holder for a {@link Radio} item
      */
@@ -147,5 +167,9 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.RadioViewHol
             mName = (TextView) itemView.findViewById(R.id.radio_name);
             mImage = (ImageView) itemView.findViewById(R.id.radio_picture);
         }
+    }
+
+    public interface OnRadioItemClickListener{
+        void onRadioItemClick(Radio pRadio);
     }
 }

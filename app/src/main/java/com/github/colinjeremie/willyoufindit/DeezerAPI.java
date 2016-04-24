@@ -90,4 +90,15 @@ public class DeezerAPI {
         DeezerRequest request = DeezerRequestFactory.requestRadios();
         mDeezerConnect.requestAsync(request, pRequestListener);
     }
+
+    public void getGenreRadios(Long pGenreId, RequestListener pRequestListener) {
+        DeezerRequest request = DeezerRequestFactory.requestGenreRadios(pGenreId);
+        mDeezerConnect.requestAsync(request, pRequestListener);
+    }
+
+    public void getRadioTracks(Long pRadioId, RequestListener pRequestListener) {
+        DeezerRequest request = DeezerRequestFactory.requestRadioTracks(pRadioId);
+        mDeezerConnect.requestAsync(request, pRequestListener);
+    }
+
 }
