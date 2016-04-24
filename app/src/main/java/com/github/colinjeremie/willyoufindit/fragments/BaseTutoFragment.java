@@ -14,7 +14,7 @@ import com.github.colinjeremie.willyoufindit.R;
  * Created by jerem_000 on 4/23/2016.
  */
 public class BaseTutoFragment extends Fragment {
-    private static final java.lang.String LAYOUT_RES = "LAYOUT_RES";
+    public static final java.lang.String LAYOUT_RES = "LAYOUT_RES";
 
     public static BaseTutoFragment getInstance(int pLayoutResId){
         BaseTutoFragment fragment = new BaseTutoFragment();

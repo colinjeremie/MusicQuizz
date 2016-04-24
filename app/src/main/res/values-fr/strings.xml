@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="genres">GENRES</string>
+    <string name="menu_search">Recherche</string>
+    <string name="pause">Pause</string>
+    <string name="play">Play</string>
+    <string name="presentation2_choose_a_category">Tu choisis une catégorie</string>
+    <string name="presentation3_lets_play">Jouer</string>
+    <string name="presentation3_subtitle">Devine quelle musique est jouée !</string>
+    <string name="presentation3_title">Ensuite une musique est aléatoirement jouée</string>
+    <string name="presentation_subtitle">Will You find it est un jeu de blind test basé sur les données de Deezer !</string>
+    <string name="presentation_title">Bienvenu</string>
+    <string name="radios">RADIOS</string>
+    <string name="discover">Découvrir</string>
+    <string name="next_song">Chanson suivante</string>
+</resources>

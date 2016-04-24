@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.deezer.sdk.model.Radio;
 import com.deezer.sdk.network.request.event.JsonRequestListener;
-import com.deezer.sdk.network.request.event.RequestListener;
 import com.github.colinjeremie.willyoufindit.DeezerAPI;
 import com.github.colinjeremie.willyoufindit.R;
 import com.github.colinjeremie.willyoufindit.utils.FilterRadioListTask;
@@ -44,7 +43,7 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.RadioViewHol
     /**
      * Callback for the Deezer API after fetching the Radios
      */
-    private final RequestListener mListener = new JsonRequestListener() {
+    public final JsonRequestListener mListener = new JsonRequestListener() {
 
         @SuppressWarnings("unchecked")
         @Override
@@ -74,7 +73,7 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.RadioViewHol
     /**
      * Remove all Radios item which already exist in the {@link #mOriginalDataSet} set of values
      */
-    private void clearDoubles() {
+    public void clearDoubles() {
         HashMap<Long, Radio> map = new HashMap<>();
 
         for (Radio tmp : mOriginalDataSet){
@@ -167,6 +166,14 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.RadioViewHol
             mName = (TextView) itemView.findViewById(R.id.radio_name);
             mImage = (ImageView) itemView.findViewById(R.id.radio_picture);
         }
+    }
+
+    public void setOriginalDataSet(List<Radio> pList){
+        this.mOriginalDataSet = pList;
+    }
+
+    public List<Radio> getOriginalDataSet() {
+        return mOriginalDataSet;
     }
 
     public interface OnRadioItemClickListener{

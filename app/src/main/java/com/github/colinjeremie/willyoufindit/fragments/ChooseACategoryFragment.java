@@ -27,7 +27,7 @@ public class ChooseACategoryFragment extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.choose_category_genre_btn){
-            swichToFragment(new GenresFragment());
+            swichToFragment(new GenreFragment());
         } else if (v.getId() == R.id.choose_category_radio_btn){
             swichToFragment(new RadioFragment());
         }

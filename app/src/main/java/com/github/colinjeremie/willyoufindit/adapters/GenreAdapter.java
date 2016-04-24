@@ -20,13 +20,19 @@ import java.util.List;
  * * WillYouFindIt
  * Created by jerem_000 on 4/1/2016.
  */
-public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.GenresViewHolder> {
+public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.GenresViewHolder> {
 
+    /**
+     * Listener when an item is clicked
+     */
     private OnGenreItemClickListener mItemClickListener;
 
+    /**
+     * The data used for the adapter
+     */
     private List<Genre> mDataSet = new ArrayList<>();
 
-    private final RequestListener mListener = new JsonRequestListener() {
+    public final RequestListener mListener = new JsonRequestListener() {
 
         @SuppressWarnings("unchecked")
         @Override
@@ -79,6 +85,11 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.GenresView
 
     public void setOnGenreItemClick(OnGenreItemClickListener pListener) {
         this.mItemClickListener = pListener;
+    }
+
+    public void setDataSet(List<Genre> pList){
+        mDataSet = pList;
+        notifyDataSetChanged();
     }
 
     public static class GenresViewHolder extends RecyclerView.ViewHolder{

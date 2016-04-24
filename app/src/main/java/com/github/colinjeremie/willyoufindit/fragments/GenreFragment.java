@@ -15,14 +15,14 @@ import com.deezer.sdk.model.Track;
 import com.deezer.sdk.network.request.event.JsonRequestListener;
 import com.github.colinjeremie.willyoufindit.DeezerAPI;
 import com.github.colinjeremie.willyoufindit.R;
-import com.github.colinjeremie.willyoufindit.adapters.GenresAdapter;
+import com.github.colinjeremie.willyoufindit.adapters.GenreAdapter;
 import com.github.colinjeremie.willyoufindit.utils.OnSwitchContentListener;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GenresFragment extends Fragment implements GenresAdapter.OnGenreItemClickListener {
+public class GenreFragment extends Fragment implements GenreAdapter.OnGenreItemClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,7 +31,7 @@ public class GenresFragment extends Fragment implements GenresAdapter.OnGenreIte
 
         RecyclerView genresView = (RecyclerView) view.findViewById(R.id.recycler_view);
         genresView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        GenresAdapter adapter = new GenresAdapter();
+        GenreAdapter adapter = new GenreAdapter();
         genresView.setAdapter(adapter);
         adapter.setOnGenreItemClick(this);
 

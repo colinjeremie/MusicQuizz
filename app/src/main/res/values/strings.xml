@@ -8,14 +8,16 @@
     <string name="pause">Pause</string>
 
     <string name="presentation_title">Welcome</string>
-    <string name="presentation_subtitle">Will You find it is a blind test based on the Deezer database!</string>
+    <string name="presentation_subtitle">Will You find it is a blind test game based on the Deezer data!</string>
     <string name="presentation2_choose_a_category">You choose a category</string>
     <string name="presentation3_title">And a song is randomly played</string>
     <string name="presentation3_subtitle">Now guess what it is!</string>
 
     <string name="radios">RADIOS</string>
     <string name="genres">GENRES</string>
-    <string name="radio_item_image_placeholder">Radio Item</string>
+    <string name="radio_item_image_placeholder" translatable="false">Radio Item</string>
     <string name="presentation3_lets_play">Let\'s play</string>
+    <string name="discover">Discover</string>
+    <string name="next_song">Next song</string>
 
 </resources>
