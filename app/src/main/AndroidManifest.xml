@@ -13,14 +13,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.TutoActivity" android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:name=".activities.SplashScreenActivity"
+            android:label="@string/title_activity_splash_screen"
+            android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.PickACategoryActivity" android:screenOrientation="portrait" >
+
+        <activity
+            android:name=".activities.TutoActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activities.PickACategoryActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -32,9 +42,17 @@
                     android:scheme="willyoufindit" />
             </intent-filter>
         </activity>
-        <activity android:label="@string/genre_activity_title" android:name=".activities.GenreActivity" android:screenOrientation="portrait" />
-        <activity android:label="@string/radio_activity_title" android:name=".activities.RadioActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.PlayGameActivity" android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.GenreActivity"
+            android:label="@string/genre_activity_title"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RadioActivity"
+            android:label="@string/radio_activity_title"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.PlayGameActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.github.colinjeremie.willyoufindit.R;
 import com.github.colinjeremie.willyoufindit.activities.PickACategoryActivity;
+import com.github.colinjeremie.willyoufindit.utils.SplashScreenHelper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +24,7 @@ public class PresentationFragmentStep3 extends Fragment {
         rootView.findViewById(R.id.letsplay_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SplashScreenHelper.tutoDone(getContext());
                 Intent intent = new Intent(getActivity(), PickACategoryActivity.class);
 
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
