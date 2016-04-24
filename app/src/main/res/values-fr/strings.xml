@@ -4,11 +4,13 @@
     <string name="menu_search">Recherche</string>
     <string name="pause">Pause</string>
     <string name="play">Play</string>
-    <string name="presentation2_choose_a_category">Tu choisis une catégorie</string>
+    <string name="presentation2_choose_a_category">Choisis une catégorie</string>
     <string name="presentation3_lets_play">Jouer</string>
     <string name="presentation3_title">Ensuite une musique est aléatoirement jouée</string>
     <string name="presentation_title">Bienvenue</string>
     <string name="radios">RADIOS</string>
     <string name="discover">Découvrir</string>
     <string name="next_song">Chanson suivante</string>
+    <string name="radio_activity_title">Choisis une radio</string>
+    <string name="genre_activity_title">Choisis un genre</string>
 </resources>

@@ -16,14 +16,17 @@ import com.github.colinjeremie.willyoufindit.activities.PickACategoryActivity;
  */
 public class PresentationFragmentStep3 extends Fragment {
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_presentation_step3, container, false);
 
         rootView.findViewById(R.id.letsplay_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), PickACategoryActivity.class));
+                Intent intent = new Intent(getActivity(), PickACategoryActivity.class);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 

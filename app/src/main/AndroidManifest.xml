@@ -32,8 +32,8 @@
                     android:scheme="willyoufindit" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.GenreActivity" android:screenOrientation="portrait" />
-        <activity android:name=".activities.RadioActivity" android:screenOrientation="portrait" />
+        <activity android:label="@string/genre_activity_title" android:name=".activities.GenreActivity" android:screenOrientation="portrait" />
+        <activity android:label="@string/radio_activity_title" android:name=".activities.RadioActivity" android:screenOrientation="portrait" />
         <activity android:name=".activities.PlayGameActivity" android:screenOrientation="portrait" />
     </application>
 

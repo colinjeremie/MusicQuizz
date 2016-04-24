@@ -8,7 +8,7 @@
     <string name="pause">Pause</string>
 
     <string name="presentation_title">Welcome</string>
-    <string name="presentation2_choose_a_category">You choose a category</string>
+    <string name="presentation2_choose_a_category">Choose a category</string>
     <string name="presentation3_title">And a song is randomly played</string>
 
     <string name="radios">RADIOS</string>
@@ -18,5 +18,7 @@
     <string name="discover">Discover</string>
     <string name="next_song">Next song</string>
     <string name="logo" translatable="false">Logo</string>
+    <string name="genre_activity_title">Pick a genre</string>
+    <string name="radio_activity_title">Pick a radio</string>
 
 </resources>
