@@ -3,9 +3,11 @@ package com.github.colinjeremie.willyoufindit.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,7 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class GenreActivity extends AppCompatActivity implements GenreAdapter.OnGenreItemClickListener {
+public class GenreActivity extends AppCompatActivity implements GenreAdapter.OnGenreItemClickListener, SearchView.OnQueryTextListener {
+
+    private GenreAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +35,42 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapter.OnG
         RecyclerView genresView = (RecyclerView) findViewById(R.id.recycler_view);
         if (genresView != null) {
             genresView.setLayoutManager(new LinearLayoutManager(this));
-            GenreAdapter adapter = new GenreAdapter();
-            genresView.setAdapter(adapter);
-            adapter.setOnGenreItemClick(this);
+            mAdapter = new GenreAdapter();
+            genresView.setAdapter(mAdapter);
+            mAdapter.setOnGenreItemClick(this);
 
-            adapter.init(this);
+            mAdapter.init(this);
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        initSearchView(menu);
+
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void initSearchView(Menu menu) {
+        MenuItem item = menu.findItem(R.id.menu_search);
+        SearchView actionView = (SearchView) MenuItemCompat.getActionView(item);
+
+        actionView.setOnQueryTextListener(this);
+        MenuItemCompat.setOnActionExpandListener(item, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                mAdapter.clearFilter();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -111,5 +137,16 @@ public class GenreActivity extends AppCompatActivity implements GenreAdapter.OnG
     @Override
     public void onGenreItemClick(Genre pGenre) {
         DeezerAPI.getInstance(this).getGenreRadios(pGenre.getId(), mGenreRadioListener);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        mAdapter.filter(newText);
+        return true;
     }
 }
