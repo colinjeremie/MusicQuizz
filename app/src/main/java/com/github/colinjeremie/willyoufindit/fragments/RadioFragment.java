@@ -27,21 +27,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RadioFragment extends Fragment implements SearchView.OnQueryTextListener, RadioAdapter.OnRadioItemClickListener {
-    private RecyclerView mGenresView;
     private RadioAdapter mAdapter;
-
-    public RadioFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_genres, container, false);
 
-        mGenresView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mGenresView.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
+        RecyclerView genresView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        genresView.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
         mAdapter = new RadioAdapter();
-        mGenresView.setAdapter(mAdapter);
+        genresView.setAdapter(mAdapter);
+
         mAdapter.setOnRadioItemClick(this);
         mAdapter.init(getActivity());
 
@@ -87,7 +84,7 @@ public class RadioFragment extends Fragment implements SearchView.OnQueryTextLis
         return false;
     }
 
-    private JsonRequestListener mTrackListener = new JsonRequestListener() {
+    private final JsonRequestListener mTrackListener = new JsonRequestListener() {
 
         @SuppressWarnings("unchecked")
         @Override

@@ -12,8 +12,8 @@ import java.util.List;
  * Created by jerem_000 on 4/23/2016.
  */
 public class FilterRadioListTask extends AsyncTask<String, Void, List<Radio>> {
-    private OnListFilteredListener mCallBack;
-    private List<Radio> mOriginalValues;
+    private final OnListFilteredListener mCallBack;
+    private final List<Radio> mOriginalValues;
 
     public FilterRadioListTask(List<Radio> pValues, OnListFilteredListener pCallback){
         this.mOriginalValues = pValues;

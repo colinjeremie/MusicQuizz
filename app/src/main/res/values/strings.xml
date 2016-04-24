@@ -1,26 +1,14 @@
 <resources>
     <string name="app_name" translatable="false">WillYouFindIt</string>
     <string name="deezer_app_id" translatable="false">174451</string>
-    <array name="search_sections_array" translatable="false">
-        <item>@string/search_track_section</item>
-        <item>@string/search_artist_section</item>
-        <item>@string/search_album_section</item>
-    </array>
 
     <string name="menu_search">Search</string>
-    <string name="error_no_result">No result</string>
 
-    <string name="search_track_section">Tracks</string>
-    <string name="search_artist_section">Artists</string>
-    <string name="search_album_section">Albums</string>
     <string name="play">Play</string>
-    <string name="stop">Stop</string>
     <string name="pause">Pause</string>
 
-    <string name="genre_picture">Genre Picture</string>
     <string name="presentation_title">Welcome</string>
     <string name="presentation_subtitle">Will You find it is a blind test based on the Deezer database!</string>
-    <string name="presentation_how_does_it_work">How does it work?</string>
     <string name="presentation2_choose_a_category">You choose a category</string>
     <string name="presentation3_title">And a song is randomly played</string>
     <string name="presentation3_subtitle">Now guess what it is!</string>

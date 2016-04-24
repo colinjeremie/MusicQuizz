@@ -25,7 +25,7 @@ import java.util.Random;
  * A simple {@link Fragment} subclass.
  */
 public class PlayGameFragment extends Fragment implements View.OnClickListener {
-    public static String LIST_TRACKS = "LIST_TRACKS";
+    public static final String LIST_TRACKS = "LIST_TRACKS";
 
     /**
      * List of {@link Track} for the game

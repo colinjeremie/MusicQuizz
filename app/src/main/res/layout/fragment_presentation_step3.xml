@@ -16,8 +16,6 @@
     <TextView
         style="@style/presentation_subtitle"
 
-        android:id="@+id/presentation2_subtitle"
-
         android:layout_below="@id/presentation2_title"
         android:layout_marginBottom="30dp"
         android:textColor="@android:color/black"

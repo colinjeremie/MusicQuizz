@@ -1,22 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v7.widget.RecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/recycler_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin"
-    tools:context="com.github.colinjeremie.willyoufindit.fragments.GenresFragment">
-
-    <TextView
-        style="@style/presentation_title"
-
-        android:id="@+id/genre_fragment_title"
-        android:text="Pick one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-
-        android:layout_below="@id/genre_fragment_title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</RelativeLayout>
+    android:padding="@dimen/activity_horizontal_margin">
+</android.support.v7.widget.RecyclerView>

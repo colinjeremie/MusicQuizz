@@ -26,7 +26,7 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.GenresView
 
     private List<Genre> mDataSet = new ArrayList<>();
 
-    private RequestListener mListener = new JsonRequestListener() {
+    private final RequestListener mListener = new JsonRequestListener() {
 
         @SuppressWarnings("unchecked")
         @Override
@@ -82,7 +82,7 @@ public class GenresAdapter extends RecyclerView.Adapter<GenresAdapter.GenresView
     }
 
     public static class GenresViewHolder extends RecyclerView.ViewHolder{
-        public TextView mName;
+        public final TextView mName;
 
         public GenresViewHolder(View itemView) {
             super(itemView);

@@ -13,13 +13,10 @@ import com.github.colinjeremie.willyoufindit.utils.OnSwitchContentListener;
 
 public class ChooseACategoryFragment extends Fragment implements View.OnClickListener {
 
-    public ChooseACategoryFragment() {
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_choose_acategory, container, false);
+        View view = inflater.inflate(R.layout.fragment_choose_a_category, container, false);
 
         view.findViewById(R.id.choose_category_radio_btn).setOnClickListener(this);
         view.findViewById(R.id.choose_category_genre_btn).setOnClickListener(this);

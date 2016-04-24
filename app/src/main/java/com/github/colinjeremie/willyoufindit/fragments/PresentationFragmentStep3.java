@@ -14,14 +14,11 @@ import com.github.colinjeremie.willyoufindit.activities.HomeActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PresentationFragment3 extends Fragment {
-    public PresentationFragment3() {
-    }
-
+public class PresentationFragmentStep3 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_presentation3, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_presentation_step3, container, false);
 
         rootView.findViewById(R.id.letsplay_btn).setOnClickListener(new View.OnClickListener() {
             @Override

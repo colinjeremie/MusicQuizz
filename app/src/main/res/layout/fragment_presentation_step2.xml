@@ -21,7 +21,6 @@
         android:layout_height="wrap_content">
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/presentation2_radio_btn"
 
             android:background="?attr/selectableItemBackground"
             android:gravity="center_horizontal"
@@ -34,7 +33,6 @@
             android:layout_height="wrap_content" />
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/presentation2_genre_btn"
 
             android:background="?attr/selectableItemBackground"
             android:gravity="center_horizontal"

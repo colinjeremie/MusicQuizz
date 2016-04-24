@@ -23,32 +23,24 @@ import java.util.List;
 import java.util.Random;
 
 public class GenresFragment extends Fragment implements GenresAdapter.OnGenreItemClickListener {
-    private RecyclerView mGenresView;
-    private GenresAdapter mAdapter;
-
-    public GenresFragment() {
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_genres, container, false);
+        View view = inflater.inflate(R.layout.fragment_genres, container, false);
+
+        RecyclerView genresView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        genresView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        GenresAdapter adapter = new GenresAdapter();
+        genresView.setAdapter(adapter);
+        adapter.setOnGenreItemClick(this);
+
+        adapter.init(getActivity());
+
+        return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mGenresView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mGenresView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new GenresAdapter();
-        mGenresView.setAdapter(mAdapter);
-        mAdapter.setOnGenreItemClick(this);
-
-        mAdapter.init(getActivity());
-    }
-
-    private JsonRequestListener mGenreRadioListener = new JsonRequestListener() {
+    private final JsonRequestListener mGenreRadioListener = new JsonRequestListener() {
 
         @SuppressWarnings("unchecked")
         @Override
@@ -73,7 +65,7 @@ public class GenresFragment extends Fragment implements GenresAdapter.OnGenreIte
         }
     };
 
-    private JsonRequestListener mTrackListener = new JsonRequestListener() {
+    private final JsonRequestListener mTrackListener = new JsonRequestListener() {
 
         @SuppressWarnings("unchecked")
         @Override

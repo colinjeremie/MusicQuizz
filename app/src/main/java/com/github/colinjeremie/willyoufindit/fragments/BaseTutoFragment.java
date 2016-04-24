@@ -14,8 +14,7 @@ import com.github.colinjeremie.willyoufindit.R;
  * Created by jerem_000 on 4/23/2016.
  */
 public class BaseTutoFragment extends Fragment {
-    public static final java.lang.String LAYOUT_RES = "LAYOUT_RES";
-
+    private static final java.lang.String LAYOUT_RES = "LAYOUT_RES";
 
     public static BaseTutoFragment getInstance(int pLayoutResId){
         BaseTutoFragment fragment = new BaseTutoFragment();
@@ -30,10 +29,10 @@ public class BaseTutoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        int layoutResId = R.layout.fragment_presentation;
+        int layoutResId = R.layout.fragment_presentation_step1;
 
         if (getArguments() != null){
-            layoutResId = getArguments().getInt(LAYOUT_RES, R.layout.fragment_presentation);
+            layoutResId = getArguments().getInt(LAYOUT_RES, R.layout.fragment_presentation_step1);
         }
         return inflater.inflate(layoutResId, container, false);
     }

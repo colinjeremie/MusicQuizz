@@ -6,27 +6,27 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.github.colinjeremie.willyoufindit.R;
 import com.github.colinjeremie.willyoufindit.fragments.BaseTutoFragment;
-import com.github.colinjeremie.willyoufindit.fragments.PresentationFragment3;
+import com.github.colinjeremie.willyoufindit.fragments.PresentationFragmentStep3;
 
 /**
  * * WillYouFindIt
  * Created by jerem_000 on 4/23/2016.
  */
-public class TutoViewPagerAdapter extends FragmentStatePagerAdapter {
-    public static int COUNT = 3;
+public class TutoAdapter extends FragmentStatePagerAdapter {
+    public static final int COUNT = 3;
 
-    public TutoViewPagerAdapter(FragmentManager pFragmentManager) {
+    public TutoAdapter(FragmentManager pFragmentManager) {
         super(pFragmentManager);
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0){
-            return BaseTutoFragment.getInstance(R.layout.fragment_presentation);
+            return BaseTutoFragment.getInstance(R.layout.fragment_presentation_step1);
         } else if (position == 1){
-            return BaseTutoFragment.getInstance(R.layout.fragment_presentation2);
+            return BaseTutoFragment.getInstance(R.layout.fragment_presentation_step2);
         }
-        return new PresentationFragment3();
+        return new PresentationFragmentStep3();
     }
 
     @Override

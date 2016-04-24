@@ -18,11 +18,6 @@ public class HomeActivity extends AppCompatActivity implements OnSwitchContentLi
         getSupportFragmentManager().beginTransaction().add(R.id.frame_container, new ChooseACategoryFragment()).commit();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
     /**
      *
      * @param pFragment Fragment to insert

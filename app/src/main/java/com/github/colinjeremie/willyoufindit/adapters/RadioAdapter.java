@@ -44,7 +44,7 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.RadioViewHol
     /**
      * Callback for the Deezer API after fetching the Radios
      */
-    private RequestListener mListener = new JsonRequestListener() {
+    private final RequestListener mListener = new JsonRequestListener() {
 
         @SuppressWarnings("unchecked")
         @Override
@@ -158,8 +158,8 @@ public class RadioAdapter extends RecyclerView.Adapter<RadioAdapter.RadioViewHol
      * View holder for a {@link Radio} item
      */
     public static class RadioViewHolder extends RecyclerView.ViewHolder{
-        public ImageView mImage;
-        public TextView mName;
+        public final ImageView mImage;
+        public final TextView mName;
 
         public RadioViewHolder(View itemView) {
             super(itemView);
