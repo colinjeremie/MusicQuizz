@@ -1,6 +1,6 @@
 ## Synopsis
 
-Will you find it is a blind test game which is based on the Deezer API
+Music quizz is a blind test game which is based on the SDK offered by Deezer
 
 ## Installation
 

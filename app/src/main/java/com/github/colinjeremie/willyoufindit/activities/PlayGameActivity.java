@@ -3,6 +3,8 @@ package com.github.colinjeremie.willyoufindit.activities;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,6 +12,8 @@ import android.widget.Toast;
 import com.deezer.sdk.model.Track;
 import com.deezer.sdk.network.request.event.DeezerError;
 import com.deezer.sdk.player.TrackPlayer;
+import com.deezer.sdk.player.event.OnPlayerStateChangeListener;
+import com.deezer.sdk.player.event.PlayerState;
 import com.deezer.sdk.player.exception.TooManyPlayersExceptions;
 import com.github.colinjeremie.willyoufindit.DeezerAPI;
 import com.github.colinjeremie.willyoufindit.R;
@@ -91,6 +95,14 @@ public class PlayGameActivity extends AppCompatActivity implements View.OnClickL
     private void initPlayer() {
         try {
             mTrackPlayer = DeezerAPI.getInstance(this).getTrackPlayer(getApplication());
+            mTrackPlayer.addOnPlayerStateChangeListener(new OnPlayerStateChangeListener() {
+                @Override
+                public void onPlayerStateChange(PlayerState playerState, long l) {
+                    if (playerState == PlayerState.PLAYBACK_COMPLETED){
+                        showPlayButton();
+                    }
+                }
+            });
         } catch (DeezerError | TooManyPlayersExceptions deezerError) {
             deezerError.printStackTrace();
             anErrorHappened(deezerError.getLocalizedMessage());
@@ -101,6 +113,11 @@ public class PlayGameActivity extends AppCompatActivity implements View.OnClickL
         endOfTheSong(false);
     }
 
+    private void showPlayButton(){
+        mPlayBtn.setVisibility(View.VISIBLE);
+        mPauseBtn.setVisibility(View.GONE);
+    }
+
     private void endOfTheSong(boolean pPauseIt) {
         if (pPauseIt){
             mTrackPlayer.pause();
@@ -108,8 +125,7 @@ public class PlayGameActivity extends AppCompatActivity implements View.OnClickL
             mTrackPlayer.stop();
         }
 
-        mPlayBtn.setVisibility(View.VISIBLE);
-        mPauseBtn.setVisibility(View.GONE);
+        showPlayButton();
         mTrackTitleView.setVisibility(View.VISIBLE);
         mTrackArtistView.setVisibility(View.VISIBLE);
         if (mTrack != null){
@@ -126,7 +142,7 @@ public class PlayGameActivity extends AppCompatActivity implements View.OnClickL
     private void anErrorHappened(String pMessage) {
         Toast.makeText(this, pMessage, Toast.LENGTH_SHORT).show();
     }
-
+    
     private void playRandomSong() {
         mTrack = null;
         if (mList != null && mList.size() > 0){
@@ -144,9 +160,13 @@ public class PlayGameActivity extends AppCompatActivity implements View.OnClickL
         Snackbar.make(this.getWindow().getDecorView(), "All songs have been played. Please go back and choose another radio ;)", Snackbar.LENGTH_LONG);
     }
 
-    private void playTrack(Track pTrack) {
+    private void hideSongInformation(){
         mTrackTitleView.setVisibility(View.GONE);
         mTrackArtistView.setVisibility(View.GONE);
+    }
+
+    private void playTrack(Track pTrack) {
+        hideSongInformation();
         if (mTrackPlayer != null && pTrack != null){
             mTrackPlayer.playTrack(pTrack.getId());
             mPlayBtn.setVisibility(View.GONE);
@@ -159,13 +179,29 @@ public class PlayGameActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void pauseTrack(){
-        mTrackTitleView.setVisibility(View.GONE);
-        mTrackArtistView.setVisibility(View.GONE);
+        hideSongInformation();
         if (mTrack != null && mTrackPlayer != null){
             mTrackPlayer.pause();
             mPlayBtn.setVisibility(View.VISIBLE);
             mPauseBtn.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            super.onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

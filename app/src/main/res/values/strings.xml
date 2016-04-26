@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">WillYouFindIt</string>
+    <string name="app_name" translatable="false">Music quizz</string>
     <string name="deezer_app_id" translatable="false">174451</string>
 
     <string name="menu_search">Search</string>
@@ -20,6 +20,4 @@
     <string name="logo" translatable="false">Logo</string>
     <string name="genre_activity_title">Pick a genre</string>
     <string name="radio_activity_title">Pick a radio</string>
-
-    <string name="title_activity_splash_screen" translatable="false">SplashScreenActivity</string>
 </resources>
