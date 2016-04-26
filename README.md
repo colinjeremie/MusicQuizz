@@ -4,8 +4,7 @@ Music quizz is a blind test game which is based on the SDK offered by Deezer
 
 ## Installation
 
-You can clone the repository.
-The app will be soon available on the PlayStore
+You can clone the repository and build the apk or just download it on the Google play store [here][6] !
 
 ## Tests
 
@@ -39,3 +38,4 @@ limitations under the License.
 [3]: https://github.com/JakeWharton/ViewPagerIndicator
 [4]: http://www.deezer.com/
 [5]: http://developers.deezer.com/sdk/android
+[6]: https://play.google.com/store/apps/details?id=com.github.colinjeremie.willyoufindit
