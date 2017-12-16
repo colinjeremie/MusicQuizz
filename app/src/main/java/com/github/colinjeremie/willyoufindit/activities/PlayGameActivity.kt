@@ -42,11 +42,10 @@ class PlayGameActivity : AppCompatActivity() {
         trackTitleView = findViewById<View>(R.id.track_title) as TextView
         trackArtistView = findViewById<View>(R.id.track_artist) as TextView
 
-        playBtn = findViewById(R.id.play_btn)
-        pauseBtn = findViewById(R.id.pause_btn)
+        playBtn = findViewById<View>(R.id.play_btn)
         playBtn.setOnClickListener { playTrack(track) }
+        pauseBtn = findViewById<View>(R.id.pause_btn)
         pauseBtn.setOnClickListener { pauseTrack() }
-
         findViewById<View>(R.id.discover_song_btn)?.setOnClickListener { endOfTheSong(true) }
         findViewById<View>(R.id.next_song_btn)?.setOnClickListener { nextSong() }
 
@@ -86,9 +85,9 @@ class PlayGameActivity : AppCompatActivity() {
         showPlayButton()
         trackTitleView.visibility = View.VISIBLE
         trackArtistView.visibility = View.VISIBLE
-        if (track != null) {
-            trackTitleView.text = track!!.title
-            trackArtistView.text = track!!.artist.name
+        track?.let {
+            trackTitleView.text = it.title
+            trackArtistView.text = it.artist.name
         }
     }
 
@@ -142,6 +141,12 @@ class PlayGameActivity : AppCompatActivity() {
             playBtn.visibility = View.VISIBLE
             pauseBtn.visibility = View.GONE
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        pauseTrack()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

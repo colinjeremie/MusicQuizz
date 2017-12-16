@@ -7,76 +7,74 @@
 
     <TextView
         android:id="@+id/track_artist"
-
-        android:visibility="gone"
-        android:padding="15dp"
-        android:layout_alignParentTop="true"
-        android:textSize="18sp"
-        android:textColor="@color/colorAccent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:padding="15dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/track_title"
-
-        android:layout_below="@id/track_artist"
-        android:visibility="gone"
-        android:padding="15dp"
-        android:textSize="18sp"
-        android:textColor="@color/colorAccent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/track_artist"
+        android:padding="15dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:visibility="gone" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/play_btn"
+        style="@style/gameButton"
+        android:layout_width="wrap_content"
 
-        android:visibility="visible"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:tint="@color/colorAccent"
-        android:background="@null"
+        android:contentDescription="@string/play"
         android:src="@drawable/play"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:contentDescription="@string/play" />
-    <ImageView
-        android:id="@+id/pause_btn"
+        android:visibility="visible" />
 
+    <ImageButton
+        android:id="@+id/pause_btn"
+        style="@style/gameButton"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:background="@null"
+        android:contentDescription="@string/pause"
         android:src="@drawable/pause"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:contentDescription="@string/pause" />
+        android:visibility="gone" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:weightSum="2">
 
         <Button
-            style="?attr/buttonBarButtonStyle"
             android:id="@+id/discover_song_btn"
-
-            android:layout_weight="1"
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
-            android:text="@string/discover"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="25dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:text="@string/discover" />
 
         <Button
-            style="?attr/buttonBarButtonStyle"
             android:id="@+id/next_song_btn"
-
-            android:layout_weight="1"
-            android:text="@string/next_song"
-            android:padding="25dp"
+            style="?attr/buttonBarButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="25dp"
+            android:text="@string/next_song" />
     </LinearLayout>
 </RelativeLayout>

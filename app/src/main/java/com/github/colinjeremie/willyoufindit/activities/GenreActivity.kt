@@ -27,7 +27,7 @@ class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         override fun onResult(o: Any, o1: Any) {
             val radios = o as List<Radio>
-            val size = radios.size
+            val size = radios.size - 1
             var position = Random().nextInt(size)
             position %= size
 

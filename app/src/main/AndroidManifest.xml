@@ -32,16 +32,6 @@
         <activity
             android:name=".activities.PickACategoryActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="deezer-blind-test"
-                    android:scheme="willyoufindit" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activities.GenreActivity"
