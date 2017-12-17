@@ -27,9 +27,13 @@ class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         override fun onResult(o: Any, o1: Any) {
             val radios = o as List<Radio>
-            val position = Random().nextInt() % radios.size
+            val size = radios.size
 
-            requestTrackFromRadio(radios[position])
+            if (radios.isNotEmpty()) {
+                val position = Random().nextInt(size + 1) % size
+
+                requestTrackFromRadio(radios[position])
+            }
         }
 
         override fun onUnparsedResult(s: String, o: Any) {
