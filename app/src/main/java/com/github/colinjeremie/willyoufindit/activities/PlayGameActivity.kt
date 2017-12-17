@@ -105,7 +105,7 @@ class PlayGameActivity : AppCompatActivity() {
         val size = list?.size ?: 0
 
         if (size > 0) {
-            val rand = Random().nextInt(size)
+            val rand = Random().nextInt()
             track = list?.get(rand % size)
             list?.remove(track)
             playTrack(track)

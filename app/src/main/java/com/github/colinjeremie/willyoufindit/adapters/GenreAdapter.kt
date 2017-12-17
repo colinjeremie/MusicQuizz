@@ -1,7 +1,6 @@
 package com.github.colinjeremie.willyoufindit.adapters
 
 import android.content.Context
-import android.os.AsyncTask
 import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -14,17 +13,13 @@ import com.deezer.sdk.network.request.event.JsonRequestListener
 import com.deezer.sdk.network.request.event.RequestListener
 import com.github.colinjeremie.willyoufindit.DeezerAPI
 import com.github.colinjeremie.willyoufindit.R
-import com.github.colinjeremie.willyoufindit.utils.FilterGenreListTask
-import com.github.colinjeremie.willyoufindit.utils.FilterRadioListTask
+import com.github.colinjeremie.willyoufindit.utils.normalize
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.util.*
 
-import java.util.ArrayList
-
-class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>(), FilterGenreListTask.OnListFilteredListener {
-    /**
-     * Task used to filter the Radios according to an input
-     */
-    private var task: FilterGenreListTask? = null
-
+class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
     /**
      * Listener when an item is clicked
      */
@@ -45,8 +40,6 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>(), Filt
 
         override fun onResult(o: Any, o1: Any) {
             originalDataSet = o as List<Genre>
-            task = FilterGenreListTask(originalDataSet, this@GenreAdapter)
-
             clearFilter()
         }
 
@@ -90,21 +83,17 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>(), Filt
         notifyDataSetChanged()
     }
 
-    /**
-     * Callback when the [FilterRadioListTask] finished to filter the results from the user's input
-     * @param list List of Radio filtered
-     */
-    override fun onListFiltered(list: MutableList<Genre>) {
-        dataSet = list
-        notifyDataSetChanged()
-    }
-
-    fun filter(pSearch: String) {
-        if (task?.status != AsyncTask.Status.FINISHED) {
-            task?.cancel(true)
-        }
-        task = FilterGenreListTask(originalDataSet, this)
-        task?.execute(pSearch)
+    fun filter(search: String) {
+        Observable
+                .fromIterable(originalDataSet)
+                .filter { it.name.normalize().contains(search.normalize(), ignoreCase = true) }
+                .toList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { result ->
+                    dataSet = result
+                    notifyDataSetChanged()
+                }
     }
 
     inner class GenresViewHolder(itemView: View,

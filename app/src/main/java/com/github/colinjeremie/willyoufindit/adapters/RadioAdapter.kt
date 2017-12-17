@@ -1,7 +1,6 @@
 package com.github.colinjeremie.willyoufindit.adapters
 
 import android.content.Context
-import android.os.AsyncTask
 import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -14,18 +13,16 @@ import com.deezer.sdk.model.Radio
 import com.deezer.sdk.network.request.event.JsonRequestListener
 import com.github.colinjeremie.willyoufindit.DeezerAPI
 import com.github.colinjeremie.willyoufindit.R
-import com.github.colinjeremie.willyoufindit.utils.FilterRadioListTask
+import com.github.colinjeremie.willyoufindit.utils.normalize
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 /**
  * * WillYouFindIt
  * Created by jerem_000 on 4/1/2016.
  */
-class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>(), FilterRadioListTask.OnListFilteredListener {
-    /**
-     * Task used to filter the Radios according to an input
-     */
-    private var task: FilterRadioListTask? = null
-
+class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
     /**
      * The original dataset returned from the Deezer API
      */
@@ -43,9 +40,7 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>(), Filte
     val listener: JsonRequestListener = object : JsonRequestListener() {
 
         override fun onResult(o: Any, o1: Any) {
-            originalDataSet = (o as List<Radio>).toMutableList()
-            clearDoubles()
-            task = FilterRadioListTask(originalDataSet, this@RadioAdapter)
+            originalDataSet = (o as List<Radio>).distinctBy { it.id }.toMutableList()
             clearFilter()
         }
 
@@ -60,13 +55,6 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>(), Filte
      * Callback when an item has been clicked on
      */
     var onRadioClickListener: ((Radio) -> Unit)? = null
-
-    /**
-     * Remove all Radios item which already exist in the [.originalDataSet] set of values
-     */
-    fun clearDoubles() {
-        originalDataSet = originalDataSet.distinctBy { it.id }.toMutableList()
-    }
 
     /**
      * Initialize the Adapter
@@ -105,21 +93,17 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>(), Filte
 
     override fun getItemCount() = dataSet.size
 
-    /**
-     * Callback when the [FilterRadioListTask] finished to filter the results from the user's input
-     * @param list List of Radio filtered
-     */
-    override fun onListFiltered(list: MutableList<Radio>) {
-        dataSet = list
-        notifyDataSetChanged()
-    }
-
-    fun filter(pSearch: String) {
-        if (task?.status != AsyncTask.Status.FINISHED) {
-            task?.cancel(true)
-        }
-        task = FilterRadioListTask(originalDataSet, this)
-        task?.execute(pSearch)
+    fun filter(search: String) {
+        Observable
+                .fromIterable(originalDataSet)
+                .filter { it.title.normalize().contains(search.normalize(), ignoreCase = true) }
+                .toList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { result ->
+                    dataSet = result
+                    notifyDataSetChanged()
+                }
     }
 
     /**
