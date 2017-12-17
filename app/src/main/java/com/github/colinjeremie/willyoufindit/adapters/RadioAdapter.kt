@@ -94,10 +94,7 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
     override fun getItemCount() = dataSet.size
 
     fun filter(search: String) {
-        Observable
-                .fromIterable(originalDataSet)
-                .filter { it.title.normalize().contains(search.normalize(), ignoreCase = true) }
-                .toList()
+        getFilterObservable(search, originalDataSet)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { result ->
@@ -105,6 +102,12 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
                     notifyDataSetChanged()
                 }
     }
+
+    fun getFilterObservable(search: String, list: List<Radio>) =
+            Observable
+                    .fromIterable(list)
+                    .filter { it.title.normalize().contains(search.normalize(), ignoreCase = true) }
+                    .toList()
 
     /**
      * View holder for a [Radio] item

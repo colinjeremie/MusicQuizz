@@ -3,6 +3,7 @@ package com.github.colinjeremie.willyoufindit.adapters
 import android.os.Build
 import com.deezer.sdk.model.Radio
 import com.github.colinjeremie.willyoufindit.BuildConfig
+import io.reactivex.subscribers.TestSubscriber
 import junit.framework.Assert
 import org.hamcrest.Matchers.any
 import org.json.JSONException
@@ -12,8 +13,9 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
+
 @RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = intArrayOf(Build.VERSION_CODES.LOLLIPOP))
+@Config(constants = BuildConfig::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
 class RadioAdapterTest {
     companion object {
         private const val TEXT_SEARCH = "test"
@@ -41,46 +43,53 @@ class RadioAdapterTest {
 
     @Test
     @Throws(Exception::class)
-    fun testCallbackAPI() {
+    fun should_hydrate_the_adapter() {
+        // Given
         Assert.assertEquals(0, adapter.itemCount)
+
+        // When
         adapter.listener.onResult(radios, any(Any::class.java))
+
+        // Then
         Assert.assertEquals(radios.size, adapter.itemCount)
     }
 
     @Test
     @Throws(Exception::class)
-    fun testClearDoubles() {
-        val size = radios.size
-        radios.add(Radio(JSONObject().put("id", 0).put("title", "test3")))
-        adapter.originalDataSet = radios
-        Assert.assertEquals(size + 1, adapter.originalDataSet.size)
-        adapter.clearDoubles()
+    fun should_filter_4_objects() {
+        // Given
+        val testSubscriber = TestSubscriber<MutableList<Radio>>()
 
-        Assert.assertEquals(size, adapter.originalDataSet.size)
+        // When
+        adapter.getFilterObservable(TEXT_SEARCH, radios).toFlowable().subscribe(testSubscriber)
+
+        // Then
+        Assert.assertEquals(4, testSubscriber.values().single().size)
+
+    }
+    @Test
+    @Throws(Exception::class)
+    fun should_filter_1_object() {
+        // Given
+        val testSubscriber = TestSubscriber<MutableList<Radio>>()
+
+        // When
+        adapter.getFilterObservable(TEXT_SEARCH1, radios).toFlowable().subscribe(testSubscriber)
+
+        // Then
+        Assert.assertEquals(1, testSubscriber.values().single().size)
     }
 
     @Test
     @Throws(Exception::class)
-    fun testFilter() {
-        adapter.listener.onResult(radios, any(Any::class.java))
-        adapter.filter(TEXT_SEARCH)
+    fun should_all_filter() {
+        // Given
+        val testSubscriber = TestSubscriber<MutableList<Radio>>()
 
-        Assert.assertEquals(radios.size, adapter.itemCount)
-        adapter.filter(TEXT_SEARCH1)
-        Assert.assertEquals(1, adapter.itemCount)
+        // When
+        adapter.getFilterObservable(TEXT_SEARCH_NO_RESULT, radios).toFlowable().subscribe(testSubscriber)
 
-        adapter.filter(TEXT_SEARCH_NO_RESULT)
-        Assert.assertEquals(0, adapter.itemCount)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun testClearFilter() {
-        adapter.listener.onResult(radios, any(Any::class.java))
-        adapter.filter(TEXT_SEARCH1)
-        Assert.assertEquals(1, adapter.itemCount)
-
-        adapter.clearFilter()
-        Assert.assertEquals(radios.size, adapter.itemCount)
+        // Then
+        Assert.assertEquals(0, testSubscriber.values().single().size)
     }
 }
