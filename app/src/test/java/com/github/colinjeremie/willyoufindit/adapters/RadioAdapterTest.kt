@@ -3,6 +3,7 @@ package com.github.colinjeremie.willyoufindit.adapters
 import android.os.Build
 import com.deezer.sdk.model.Radio
 import com.github.colinjeremie.willyoufindit.BuildConfig
+import io.reactivex.subscribers.TestSubscriber
 import junit.framework.Assert
 import org.hamcrest.Matchers.any
 import org.json.JSONException
@@ -11,6 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+
 
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class, sdk = intArrayOf(Build.VERSION_CODES.LOLLIPOP))
@@ -49,38 +51,18 @@ class RadioAdapterTest {
 
     @Test
     @Throws(Exception::class)
-    fun testClearDoubles() {
-        val size = radios.size
-        radios.add(Radio(JSONObject().put("id", 0).put("title", "test3")))
-        adapter.originalDataSet = radios
-        Assert.assertEquals(size + 1, adapter.originalDataSet.size)
-        adapter.clearDoubles()
-
-        Assert.assertEquals(size, adapter.originalDataSet.size)
-    }
-
-    @Test
-    @Throws(Exception::class)
     fun testFilter() {
-        adapter.listener.onResult(radios, any(Any::class.java))
-        adapter.filter(TEXT_SEARCH)
+        var testSubscriber = TestSubscriber<MutableList<Radio>>()
 
-        Assert.assertEquals(radios.size, adapter.itemCount)
-        adapter.filter(TEXT_SEARCH1)
-        Assert.assertEquals(1, adapter.itemCount)
+        adapter.getFilterObservable(TEXT_SEARCH, radios).toFlowable().subscribe(testSubscriber)
+        Assert.assertEquals(4, testSubscriber.values().single().size)
 
-        adapter.filter(TEXT_SEARCH_NO_RESULT)
-        Assert.assertEquals(0, adapter.itemCount)
-    }
+        testSubscriber = TestSubscriber()
+        adapter.getFilterObservable(TEXT_SEARCH1, radios).toFlowable().subscribe(testSubscriber)
+        Assert.assertEquals(1, testSubscriber.values().single().size)
 
-    @Test
-    @Throws(Exception::class)
-    fun testClearFilter() {
-        adapter.listener.onResult(radios, any(Any::class.java))
-        adapter.filter(TEXT_SEARCH1)
-        Assert.assertEquals(1, adapter.itemCount)
-
-        adapter.clearFilter()
-        Assert.assertEquals(radios.size, adapter.itemCount)
+        testSubscriber = TestSubscriber()
+        adapter.getFilterObservable(TEXT_SEARCH_NO_RESULT, radios).toFlowable().subscribe(testSubscriber)
+        Assert.assertEquals(0, testSubscriber.values().single().size)
     }
 }

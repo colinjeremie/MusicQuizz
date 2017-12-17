@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
 import com.deezer.sdk.model.Genre
 import com.deezer.sdk.network.request.event.JsonRequestListener
 import com.deezer.sdk.network.request.event.RequestListener
@@ -33,7 +32,7 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
     /**
      * The original data
      */
-    private var originalDataSet: List<Genre> = ArrayList()
+    private var originalDataSet: List<Genre> = mutableListOf()
 
     @VisibleForTesting
     val listener: RequestListener = object : JsonRequestListener() {
@@ -84,10 +83,7 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
     }
 
     fun filter(search: String) {
-        Observable
-                .fromIterable(originalDataSet)
-                .filter { it.name.normalize().contains(search.normalize(), ignoreCase = true) }
-                .toList()
+        getFilterObservable(search, originalDataSet)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { result ->
@@ -95,6 +91,12 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
                     notifyDataSetChanged()
                 }
     }
+
+    fun getFilterObservable(search: String, list: List<Genre>) =
+            Observable
+                    .fromIterable(list)
+                    .filter { it.name.normalize().contains(search.normalize(), ignoreCase = true) }
+                    .toList()
 
     inner class GenresViewHolder(itemView: View,
                                  val name: TextView = itemView.findViewById(R.id.genre_name)) : RecyclerView.ViewHolder(itemView)
