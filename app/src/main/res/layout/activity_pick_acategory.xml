@@ -9,43 +9,52 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.github.colinjeremie.willyoufindit.activities.PickACategoryActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.3"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/logo_big" />
+
     <TextView
         style="@style/presentation_title"
 
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/presentation2_choose_a_category"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/presentation2_choose_a_category" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            style="?attr/buttonBarButtonStyle"
+        android:weightSum="2">
 
+        <Button
             android:id="@+id/choose_category_radio_btn"
 
-            android:layout_weight="1"
-            android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
-            android:padding="25dp"
-            android:text="@string/radios"
-            android:background="?attr/selectableItemBackground"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-        <Button
             style="?attr/buttonBarButtonStyle"
 
-            android:id="@+id/choose_category_genre_btn"
-            android:layout_weight="1"
-            android:padding="25dp"
-            android:text="@string/genres"
-            android:background="?attr/selectableItemBackground"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:padding="25dp"
+            android:text="@string/radios" />
+
+        <Button
+            android:id="@+id/choose_category_genre_btn"
+
+            style="?attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:padding="25dp"
+            android:text="@string/genres" />
     </LinearLayout>
 </RelativeLayout>
