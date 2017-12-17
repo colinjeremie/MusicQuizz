@@ -1,7 +1,6 @@
 package com.github.colinjeremie.willyoufindit.utils
 
 import android.content.Context
-import android.content.SharedPreferences
 
 object SplashScreenHelper {
     private val TUTO = "TUTO"
