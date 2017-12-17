@@ -39,26 +39,53 @@ class GenreAdapterTest {
 
     @Test
     @Throws(Exception::class)
-    fun testCallbackAPI() {
+    fun should_hydrate_the_adapter() {
+        // Given
         Assert.assertEquals(0, adapter.itemCount)
+
+        // When
         (adapter.listener as JsonRequestListener).onResult(genres, any(Any::class.java))
+
+        // Then
         Assert.assertEquals(genres.size, adapter.itemCount)
     }
 
     @Test
     @Throws(Exception::class)
-    fun testFilter() {
-        var testSubscriber = TestSubscriber<MutableList<Genre>>()
+    fun should_not_filter() {
+        // Given
+        val testSubscriber = TestSubscriber<MutableList<Genre>>()
 
+        // When
         adapter.getFilterObservable(TEXT_SEARCH, genres).toFlowable().subscribe(testSubscriber)
+
+        // Then
         Assert.assertEquals(5, testSubscriber.values().single().size)
+    }
 
-        testSubscriber = TestSubscriber()
+    @Test
+    @Throws(Exception::class)
+    fun should_filter_2_objects() {
+        // Given
+        val testSubscriber = TestSubscriber<MutableList<Genre>>()
+
+        // When
         adapter.getFilterObservable(TEXT_SEARCH1, genres).toFlowable().subscribe(testSubscriber)
-        Assert.assertEquals(2, testSubscriber.values().single().size)
 
-        testSubscriber = TestSubscriber()
+        // Then
+        Assert.assertEquals(2, testSubscriber.values().single().size)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun should_all_filter() {
+        // Given
+        val testSubscriber = TestSubscriber<MutableList<Genre>>()
+
+        // When
         adapter.getFilterObservable(TEXT_SEARCH_NO_RESULT, genres).toFlowable().subscribe(testSubscriber)
+
+        // Then
         Assert.assertEquals(0, testSubscriber.values().single().size)
     }
 }

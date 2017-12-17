@@ -15,7 +15,7 @@ import org.robolectric.annotation.Config
 
 
 @RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = intArrayOf(Build.VERSION_CODES.LOLLIPOP))
+@Config(constants = BuildConfig::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
 class RadioAdapterTest {
     companion object {
         private const val TEXT_SEARCH = "test"
@@ -43,26 +43,53 @@ class RadioAdapterTest {
 
     @Test
     @Throws(Exception::class)
-    fun testCallbackAPI() {
+    fun should_hydrate_the_adapter() {
+        // Given
         Assert.assertEquals(0, adapter.itemCount)
+
+        // When
         adapter.listener.onResult(radios, any(Any::class.java))
+
+        // Then
         Assert.assertEquals(radios.size, adapter.itemCount)
     }
 
     @Test
     @Throws(Exception::class)
-    fun testFilter() {
-        var testSubscriber = TestSubscriber<MutableList<Radio>>()
+    fun should_filter_4_objects() {
+        // Given
+        val testSubscriber = TestSubscriber<MutableList<Radio>>()
 
+        // When
         adapter.getFilterObservable(TEXT_SEARCH, radios).toFlowable().subscribe(testSubscriber)
+
+        // Then
         Assert.assertEquals(4, testSubscriber.values().single().size)
 
-        testSubscriber = TestSubscriber()
-        adapter.getFilterObservable(TEXT_SEARCH1, radios).toFlowable().subscribe(testSubscriber)
-        Assert.assertEquals(1, testSubscriber.values().single().size)
+    }
+    @Test
+    @Throws(Exception::class)
+    fun should_filter_1_object() {
+        // Given
+        val testSubscriber = TestSubscriber<MutableList<Radio>>()
 
-        testSubscriber = TestSubscriber()
+        // When
+        adapter.getFilterObservable(TEXT_SEARCH1, radios).toFlowable().subscribe(testSubscriber)
+
+        // Then
+        Assert.assertEquals(1, testSubscriber.values().single().size)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun should_all_filter() {
+        // Given
+        val testSubscriber = TestSubscriber<MutableList<Radio>>()
+
+        // When
         adapter.getFilterObservable(TEXT_SEARCH_NO_RESULT, radios).toFlowable().subscribe(testSubscriber)
+
+        // Then
         Assert.assertEquals(0, testSubscriber.values().single().size)
     }
 }
