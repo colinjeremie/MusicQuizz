@@ -11,13 +11,13 @@ import com.github.colinjeremie.willyoufindit.activities.TutoActivity;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
-import org.robolectric.internal.ShadowExtractor;
+import org.robolectric.shadow.api.Shadow;
 import org.robolectric.shadows.ShadowActivity;
 import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
 
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
 public class PresentationFragmentStep3Test {
 
@@ -25,7 +25,7 @@ public class PresentationFragmentStep3Test {
     public void shouldStartNextActivity() throws Exception{
         Fragment fragment = new PresentationFragmentStep3();
         SupportFragmentTestUtil.startFragment(fragment, TutoActivity.class);
-        ShadowActivity activity = (ShadowActivity) ShadowExtractor.extract(fragment.getActivity());
+        ShadowActivity activity = Shadow.extract(fragment.getActivity());
 
         Assert.assertNotNull(fragment.getView());
         fragment.getView().findViewById(R.id.letsplay_btn).performClick();
