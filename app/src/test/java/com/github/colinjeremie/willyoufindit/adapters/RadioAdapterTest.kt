@@ -1,21 +1,13 @@
 package com.github.colinjeremie.willyoufindit.adapters
 
-import android.os.Build
 import com.deezer.sdk.model.Radio
-import com.github.colinjeremie.willyoufindit.BuildConfig
 import io.reactivex.subscribers.TestSubscriber
-import junit.framework.Assert
-import org.hamcrest.Matchers.any
 import org.json.JSONException
 import org.json.JSONObject
+import org.junit.Assert
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
 
-@RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
 class RadioAdapterTest {
     companion object {
         private const val TEXT_SEARCH = "test"
@@ -24,7 +16,7 @@ class RadioAdapterTest {
     }
 
     private val radios by lazy { initDummyData() }
-    private val adapter: RadioAdapter = RadioAdapter()
+    private val adapter: RadioAdapter = RadioAdapter {}
 
     private fun initDummyData(): MutableList<Radio> {
         val list = mutableListOf<Radio>()
@@ -39,19 +31,6 @@ class RadioAdapterTest {
         }
 
         return list
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun should_hydrate_the_adapter() {
-        // Given
-        Assert.assertEquals(0, adapter.itemCount)
-
-        // When
-        adapter.listener.onResult(radios, any(Any::class.java))
-
-        // Then
-        Assert.assertEquals(radios.size, adapter.itemCount)
     }
 
     @Test

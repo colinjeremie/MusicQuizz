@@ -9,17 +9,26 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ProgressBar
 import com.deezer.sdk.model.Radio
 import com.deezer.sdk.model.Track
 import com.deezer.sdk.network.request.event.JsonRequestListener
-import com.github.colinjeremie.willyoufindit.DeezerAPI
+import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.adapters.GenreAdapter
 import java.util.*
 
 class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
-    private val adapter: GenreAdapter by lazy { GenreAdapter() }
+    private val adapter: GenreAdapter by lazy {
+        GenreAdapter({ genre ->
+            MyApplication.instance.deezerApi.getGenreRadios(genre.id, genreRadioListener)
+        }, { isLoading ->
+            loaderView.visibility = if (isLoading) View.VISIBLE else View.GONE
+            recyclerView.visibility = if (isLoading) View.GONE else View.VISIBLE
+        })
+    }
     private val genreRadioListener = object : JsonRequestListener() {
 
         override fun onResult(o: Any, o1: Any) {
@@ -56,19 +65,17 @@ class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
     }
 
+    private val loaderView: ProgressBar by lazy { findViewById<ProgressBar>(R.id.progress_bar) }
+    private val recyclerView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_genre)
 
-        val genresView = findViewById<RecyclerView>(R.id.recycler_view)
-        genresView.layoutManager = LinearLayoutManager(this)
-        genresView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
 
-        adapter.onGenreClickListener = { genre ->
-            DeezerAPI.getInstance(this).getGenreRadios(genre.id, genreRadioListener)
-        }
-
-        adapter.init(this)
+        adapter.fetchGenres()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -96,21 +103,19 @@ class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         })
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            onBackPressed()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+            if (item.itemId == android.R.id.home) {
+                onBackPressed()
+                true
+            } else {
+                super.onOptionsItemSelected(item)
+            }
 
     private fun requestTrackFromRadio(pRadio: Radio) {
-        DeezerAPI.getInstance(this).getRadioTracks(pRadio.id, trackListener)
+        MyApplication.instance.deezerApi.getRadioTracks(pRadio.id, trackListener)
     }
 
-    override fun onQueryTextSubmit(query: String): Boolean {
-        return false
-    }
+    override fun onQueryTextSubmit(query: String): Boolean = false
 
     override fun onQueryTextChange(newText: String): Boolean {
         adapter.filter(newText)

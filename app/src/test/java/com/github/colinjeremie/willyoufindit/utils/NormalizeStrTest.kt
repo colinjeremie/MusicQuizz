@@ -1,6 +1,6 @@
 package com.github.colinjeremie.willyoufindit.utils
 
-import junit.framework.Assert
+import org.junit.Assert
 
 import org.junit.Test
 

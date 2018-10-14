@@ -20,4 +20,5 @@
     <string name="logo" translatable="false">Logo</string>
     <string name="genre_activity_title">Pick a genre</string>
     <string name="radio_activity_title">Pick a radio</string>
+    <string name="end_of_game_message">All songs have been played. Please go back and choose another radio ;)</string>
 </resources>

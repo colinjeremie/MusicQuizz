@@ -1,56 +1,40 @@
 package com.github.colinjeremie.willyoufindit
 
 import android.app.Application
-import android.content.Context
-
 import com.deezer.sdk.network.connect.DeezerConnect
 import com.deezer.sdk.network.request.DeezerRequestFactory
-import com.deezer.sdk.network.request.event.DeezerError
 import com.deezer.sdk.network.request.event.RequestListener
 import com.deezer.sdk.player.TrackPlayer
-import com.deezer.sdk.player.exception.TooManyPlayersExceptions
 import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker
 
-class DeezerAPI private constructor(context: Context) {
-    companion object {
-        private var instance: DeezerAPI? = null
-
-        fun getInstance(context: Context): DeezerAPI {
-            if (instance == null) {
-                instance = DeezerAPI(context)
-            }
-            return instance!!
-        }
+class DeezerAPI constructor(private val application: Application) {
+    private val deezerConnect by lazy {
+        DeezerConnect
+            .forApp(application.getString(R.string.deezer_app_id))
+            .withContext(application)
+            .build()
+    }
+    val trackPlayer: TrackPlayer by lazy {
+        TrackPlayer(application, deezerConnect, WifiAndMobileNetworkStateChecker())
     }
 
-    private val deezerConnect = DeezerConnect(context, context.getString(R.string.deezer_app_id))
-    private var trackPlayer: TrackPlayer? = null
-
-    @Throws(DeezerError::class, TooManyPlayersExceptions::class)
-    fun getTrackPlayer(pApplication: Application): TrackPlayer {
-        if (trackPlayer == null) {
-            trackPlayer = TrackPlayer(pApplication, deezerConnect, WifiAndMobileNetworkStateChecker())
-        }
-        return trackPlayer!!
-    }
-
-    fun getGenres(pRequestListener: RequestListener) {
+    fun getGenres(requestListener: RequestListener) {
         val request = DeezerRequestFactory.requestGenres()
-        deezerConnect.requestAsync(request, pRequestListener)
+        deezerConnect.requestAsync(request, requestListener)
     }
 
-    fun getRadios(pRequestListener: RequestListener) {
+    fun getRadios(requestListener: RequestListener) {
         val request = DeezerRequestFactory.requestRadios()
-        deezerConnect.requestAsync(request, pRequestListener)
+        deezerConnect.requestAsync(request, requestListener)
     }
 
-    fun getGenreRadios(pGenreId: Long?, pRequestListener: RequestListener) {
-        val request = DeezerRequestFactory.requestGenreRadios(pGenreId!!)
-        deezerConnect.requestAsync(request, pRequestListener)
+    fun getGenreRadios(genreId: Long, requestListener: RequestListener) {
+        val request = DeezerRequestFactory.requestGenreRadios(genreId)
+        deezerConnect.requestAsync(request, requestListener)
     }
 
-    fun getRadioTracks(pRadioId: Long?, pRequestListener: RequestListener) {
-        val request = DeezerRequestFactory.requestRadioTracks(pRadioId!!)
-        deezerConnect.requestAsync(request, pRequestListener)
+    fun getRadioTracks(radioId: Long, requestListener: RequestListener) {
+        val request = DeezerRequestFactory.requestRadioTracks(radioId)
+        deezerConnect.requestAsync(request, requestListener)
     }
 }

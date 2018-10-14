@@ -1,6 +1,5 @@
 package com.github.colinjeremie.willyoufindit.adapters
 
-import android.content.Context
 import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,28 +9,18 @@ import android.widget.TextView
 import com.deezer.sdk.model.Genre
 import com.deezer.sdk.network.request.event.JsonRequestListener
 import com.deezer.sdk.network.request.event.RequestListener
-import com.github.colinjeremie.willyoufindit.DeezerAPI
+import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.utils.normalize
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
-    /**
-     * Listener when an item is clicked
-     */
-    var onGenreClickListener: ((Genre) -> Unit)? = null
+class GenreAdapter(private val onGenreClickListener: ((Genre) -> Unit), private val loadingCallback: (Boolean) -> Unit) : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
 
-    /**
-     * The data used for the adapter
-     */
     private var dataSet: MutableList<Genre> = ArrayList()
-
-    /**
-     * The original data
-     */
     private var originalDataSet: List<Genre> = mutableListOf()
 
     @VisibleForTesting
@@ -40,18 +29,21 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
         override fun onResult(o: Any, o1: Any) {
             originalDataSet = o as List<Genre>
             clearFilter()
+            loadingCallback.invoke(false)
         }
 
         override fun onUnparsedResult(s: String, o: Any) {
+            loadingCallback.invoke(false)
         }
 
         override fun onException(e: Exception, o: Any) {
+            loadingCallback.invoke(false)
         }
     }
 
-
-    fun init(context: Context) {
-        DeezerAPI.getInstance(context).getGenres(listener)
+    fun fetchGenres() {
+        loadingCallback.invoke(true)
+        MyApplication.instance.deezerApi.getGenres(listener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenresViewHolder {
@@ -65,17 +57,12 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
 
         holder.name.text = model.name
         holder.itemView.setOnClickListener {
-            onGenreClickListener?.invoke(model)
+            onGenreClickListener.invoke(model)
         }
     }
 
-    override fun getItemCount(): Int {
-        return dataSet.size
-    }
+    override fun getItemCount() = dataSet.size
 
-    /**
-     * Remove the filter used aka put the adapter in its original state
-     */
     fun clearFilter() {
         dataSet.clear()
         dataSet.addAll(originalDataSet)
@@ -92,7 +79,7 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
                 }
     }
 
-    fun getFilterObservable(search: String, list: List<Genre>) =
+    fun getFilterObservable(search: String, list: List<Genre>): Single<MutableList<Genre>> =
             Observable
                     .fromIterable(list)
                     .filter { it.name.normalize().contains(search.normalize(), ignoreCase = true) }

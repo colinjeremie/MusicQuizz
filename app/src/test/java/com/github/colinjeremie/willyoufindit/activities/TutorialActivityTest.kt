@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager
 import com.github.colinjeremie.willyoufindit.BuildConfig
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.adapters.TutoAdapter
-import junit.framework.Assert
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -14,13 +14,13 @@ import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
-class TutoActivityTest {
+class TutorialActivityTest {
 
     @Test
     @Throws(Exception::class)
     fun should_have_3_pages() {
         // Given
-        val activity = Robolectric.setupActivity(TutoActivity::class.java)
+        val activity = Robolectric.setupActivity(TutorialActivity::class.java)
         val viewPager = activity.findViewById<ViewPager>(R.id.view_pager)
 
         // When

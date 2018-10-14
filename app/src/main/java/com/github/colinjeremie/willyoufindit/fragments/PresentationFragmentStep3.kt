@@ -17,7 +17,7 @@ class PresentationFragmentStep3 : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_presentation_step3, container, false)
 
         rootView.findViewById<View>(R.id.letsplay_btn).setOnClickListener {
-            SplashScreenHelper.tutoDone(rootView.context)
+            SplashScreenHelper.tutorialDone(rootView.context)
             val intent = Intent(activity, PickACategoryActivity::class.java)
 
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK

@@ -1,20 +1,11 @@
 package com.github.colinjeremie.willyoufindit.adapters
 
-import android.os.Build
 import com.deezer.sdk.model.Genre
-import com.deezer.sdk.network.request.event.JsonRequestListener
-import com.github.colinjeremie.willyoufindit.BuildConfig
 import io.reactivex.subscribers.TestSubscriber
-import junit.framework.Assert
-import org.hamcrest.CoreMatchers.any
 import org.json.JSONObject
+import org.junit.Assert
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
-@RunWith(RobolectricTestRunner::class)
-@Config(constants = BuildConfig::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
 class GenreAdapterTest {
     companion object {
         private const val TEXT_SEARCH = "test"
@@ -22,7 +13,7 @@ class GenreAdapterTest {
         private const val TEXT_SEARCH_NO_RESULT = "NO_RESULTS"
     }
 
-    private val adapter = GenreAdapter()
+    private val adapter = GenreAdapter {}
     private val genres = createGenres()
 
     private fun createGenres(): MutableList<Genre> {
@@ -35,19 +26,6 @@ class GenreAdapterTest {
         genres.add(Genre(JSONObject().put("id", 4).put("name", "test4")))
 
         return genres
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun should_hydrate_the_adapter() {
-        // Given
-        Assert.assertEquals(0, adapter.itemCount)
-
-        // When
-        (adapter.listener as JsonRequestListener).onResult(genres, any(Any::class.java))
-
-        // Then
-        Assert.assertEquals(genres.size, adapter.itemCount)
     }
 
     @Test

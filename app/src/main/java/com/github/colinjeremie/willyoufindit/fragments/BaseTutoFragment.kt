@@ -12,16 +12,14 @@ import com.github.colinjeremie.willyoufindit.R
 class BaseTutoFragment : Fragment() {
 
     companion object {
-        val LAYOUT_RES = "LAYOUT_RES"
+        const val LAYOUT_RES = "LAYOUT_RES"
 
         fun getInstance(@LayoutRes layoutRes: Int): BaseTutoFragment {
-            val fragment = BaseTutoFragment()
-            val args = Bundle()
+            val arguments = Bundle().apply { putInt(LAYOUT_RES, layoutRes) }
 
-            args.putInt(LAYOUT_RES, layoutRes)
-            fragment.arguments = args
-
-            return fragment
+            return BaseTutoFragment().apply {
+                this.arguments = arguments
+            }
         }
     }
 
