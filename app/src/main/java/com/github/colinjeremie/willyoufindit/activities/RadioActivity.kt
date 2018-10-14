@@ -13,14 +13,17 @@ import android.view.MenuItem
 import android.view.View
 import com.deezer.sdk.model.Track
 import com.deezer.sdk.network.request.event.JsonRequestListener
-import com.github.colinjeremie.willyoufindit.DeezerAPI
 import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.adapters.RadioAdapter
 import java.util.*
 
 class RadioActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
-    private val adapter: RadioAdapter by lazy { RadioAdapter() }
+    private val adapter: RadioAdapter by lazy {
+        RadioAdapter { radio ->
+            MyApplication.instance.deezerApi.getRadioTracks(radio.id, trackListener)
+        }
+    }
 
     private val trackListener = object : JsonRequestListener() {
 
@@ -47,10 +50,7 @@ class RadioActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         genresView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         genresView.adapter = adapter
 
-        adapter.onRadioClickListener = { radio ->
-            MyApplication.instance.deezerApi.getRadioTracks(radio.id, trackListener)
-        }
-        adapter.init(this)
+        adapter.fetchRadios()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,13 +60,13 @@ class RadioActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            onBackPressed()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+            if (item.itemId == android.R.id.home) {
+                onBackPressed()
+                true
+            } else {
+                super.onOptionsItemSelected(item)
+            }
 
     private fun initSearchView(menu: Menu) {
         val item = menu.findItem(R.id.menu_search)
@@ -74,9 +74,7 @@ class RadioActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         actionView.setOnQueryTextListener(this)
         item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                return true
-            }
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean = true
 
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 adapter.clearFilter()
@@ -85,9 +83,7 @@ class RadioActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         })
     }
 
-    override fun onQueryTextSubmit(query: String): Boolean {
-        return false
-    }
+    override fun onQueryTextSubmit(query: String): Boolean = false
 
     override fun onQueryTextChange(newText: String): Boolean {
         adapter.filter(newText)

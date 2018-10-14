@@ -20,7 +20,11 @@ import java.util.*
 
 class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
-    private val adapter: GenreAdapter by lazy { GenreAdapter() }
+    private val adapter: GenreAdapter by lazy {
+        GenreAdapter { genre ->
+            MyApplication.instance.deezerApi.getGenreRadios(genre.id, genreRadioListener)
+        }
+    }
     private val genreRadioListener = object : JsonRequestListener() {
 
         override fun onResult(o: Any, o1: Any) {
@@ -65,11 +69,7 @@ class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         genresView.layoutManager = LinearLayoutManager(this)
         genresView.adapter = adapter
 
-        adapter.onGenreClickListener = { genre ->
-            MyApplication.instance.deezerApi.getGenreRadios(genre.id, genreRadioListener)
-        }
-
-        adapter.init(this)
+        adapter.fetchGenres()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -97,21 +97,19 @@ class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         })
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            onBackPressed()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+            if (item.itemId == android.R.id.home) {
+                onBackPressed()
+                true
+            } else {
+                super.onOptionsItemSelected(item)
+            }
 
     private fun requestTrackFromRadio(pRadio: Radio) {
         MyApplication.instance.deezerApi.getRadioTracks(pRadio.id, trackListener)
     }
 
-    override fun onQueryTextSubmit(query: String): Boolean {
-        return false
-    }
+    override fun onQueryTextSubmit(query: String): Boolean = false
 
     override fun onQueryTextChange(newText: String): Boolean {
         adapter.filter(newText)

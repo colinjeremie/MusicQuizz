@@ -8,7 +8,7 @@ import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.adapters.TutoAdapter
 import com.github.colinjeremie.willyoufindit.utils.pagerindicator.CirclePageIndicator
 
-class TutoActivity : AppCompatActivity() {
+class TutorialActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

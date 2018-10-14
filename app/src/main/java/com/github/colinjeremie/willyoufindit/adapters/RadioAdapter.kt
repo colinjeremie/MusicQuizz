@@ -1,6 +1,5 @@
 package com.github.colinjeremie.willyoufindit.adapters
 
-import android.content.Context
 import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.deezer.sdk.model.Radio
 import com.deezer.sdk.network.request.event.JsonRequestListener
-import com.github.colinjeremie.willyoufindit.DeezerAPI
 import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.utils.normalize
@@ -19,7 +17,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
+class RadioAdapter(private val onRadioClickListener: ((Radio) -> Unit)) : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
     @VisibleForTesting
     var originalDataSet: MutableList<Radio> = mutableListOf()
 
@@ -39,9 +37,7 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
         }
     }
 
-    var onRadioClickListener: ((Radio) -> Unit)? = null
-
-    fun init(context: Context) {
+    fun fetchRadios() {
         MyApplication.instance.deezerApi.getRadios(fetchRadiosListener)
     }
 
@@ -63,9 +59,6 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
         holder.itemView.setOnClickListener { onRadioClickListener?.invoke(model) }
     }
 
-    /**
-     * Remove the filter used aka put the adapter in its original state
-     */
     fun clearFilter() {
         dataSet.clear()
         dataSet.addAll(originalDataSet)

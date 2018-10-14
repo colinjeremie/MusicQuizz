@@ -32,13 +32,13 @@ class DeezerAPI constructor(private val application: Application) {
         deezerConnect.requestAsync(request, requestListener)
     }
 
-    fun getGenreRadios(genreId: Long?, requestListener: RequestListener) {
-        val request = DeezerRequestFactory.requestGenreRadios(genreId!!)
+    fun getGenreRadios(genreId: Long, requestListener: RequestListener) {
+        val request = DeezerRequestFactory.requestGenreRadios(genreId)
         deezerConnect.requestAsync(request, requestListener)
     }
 
-    fun getRadioTracks(radioId: Long?, requestListener: RequestListener) {
-        val request = DeezerRequestFactory.requestRadioTracks(radioId!!)
+    fun getRadioTracks(radioId: Long, requestListener: RequestListener) {
+        val request = DeezerRequestFactory.requestRadioTracks(radioId)
         deezerConnect.requestAsync(request, requestListener)
     }
 }

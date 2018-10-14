@@ -14,13 +14,13 @@ import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
-class TutoActivityTest {
+class TutorialActivityTest {
 
     @Test
     @Throws(Exception::class)
     fun should_have_3_pages() {
         // Given
-        val activity = Robolectric.setupActivity(TutoActivity::class.java)
+        val activity = Robolectric.setupActivity(TutorialActivity::class.java)
         val viewPager = activity.findViewById<ViewPager>(R.id.view_pager)
 
         // When

@@ -5,7 +5,7 @@ import android.view.View
 import com.github.colinjeremie.willyoufindit.BuildConfig
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.activities.PickACategoryActivity
-import com.github.colinjeremie.willyoufindit.activities.TutoActivity
+import com.github.colinjeremie.willyoufindit.activities.TutorialActivity
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -24,7 +24,7 @@ class PresentationFragmentStep3Test {
     fun should_start_next_activity_on_click() {
         // Given
         val fragment = PresentationFragmentStep3()
-        SupportFragmentTestUtil.startFragment(fragment, TutoActivity::class.java)
+        SupportFragmentTestUtil.startFragment(fragment, TutorialActivity::class.java)
         val activity = Shadow.extract<ShadowActivity>(fragment.activity)
         Assert.assertNotNull(fragment.view)
 

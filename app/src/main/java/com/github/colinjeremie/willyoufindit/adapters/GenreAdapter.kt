@@ -15,12 +15,12 @@ import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.utils.normalize
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
-    var onGenreClickListener: ((Genre) -> Unit)? = null
+class GenreAdapter(private val onGenreClickListener: ((Genre) -> Unit)) : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
 
     private var dataSet: MutableList<Genre> = ArrayList()
     private var originalDataSet: List<Genre> = mutableListOf()
@@ -40,8 +40,7 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
         }
     }
 
-
-    fun init(context: Context) {
+    fun fetchGenres() {
         MyApplication.instance.deezerApi.getGenres(listener)
     }
 
@@ -56,17 +55,12 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
 
         holder.name.text = model.name
         holder.itemView.setOnClickListener {
-            onGenreClickListener?.invoke(model)
+            onGenreClickListener.invoke(model)
         }
     }
 
-    override fun getItemCount(): Int {
-        return dataSet.size
-    }
+    override fun getItemCount() = dataSet.size
 
-    /**
-     * Remove the filter used aka put the adapter in its original state
-     */
     fun clearFilter() {
         dataSet.clear()
         dataSet.addAll(originalDataSet)
@@ -83,7 +77,7 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
                 }
     }
 
-    fun getFilterObservable(search: String, list: List<Genre>) =
+    fun getFilterObservable(search: String, list: List<Genre>): Single<MutableList<Genre>> =
             Observable
                     .fromIterable(list)
                     .filter { it.name.normalize().contains(search.normalize(), ignoreCase = true) }

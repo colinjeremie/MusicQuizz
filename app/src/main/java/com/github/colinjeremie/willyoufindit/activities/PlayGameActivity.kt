@@ -115,7 +115,7 @@ class PlayGameActivity : AppCompatActivity() {
     }
 
     private fun endOfGame() {
-        Snackbar.make(this.window.decorView, "All songs have been played. Please go back and choose another radio ;)", Snackbar.LENGTH_LONG)
+        Snackbar.make(this.window.decorView, getString(R.string.end_of_game_message), Snackbar.LENGTH_LONG)
     }
 
     private fun hideSongInformation() {

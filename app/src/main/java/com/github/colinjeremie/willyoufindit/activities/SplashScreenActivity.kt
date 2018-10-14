@@ -25,16 +25,16 @@ class SplashScreenActivity : AppCompatActivity() {
         val isFirstTimeLaunched = SplashScreenHelper.isFirstTimeLaunched(this@SplashScreenActivity)
         Handler().postDelayed({
             if (isFirstTimeLaunched) {
-                launchTutoActivity()
+                launchTutorialActivity()
             } else {
                 launchOtherActivity()
             }
         }, DELAY_TIME)
     }
 
-    private fun launchTutoActivity() {
+    private fun launchTutorialActivity() {
         startActivity(
-                Intent(this, TutoActivity::class.java)
+                Intent(this, TutorialActivity::class.java)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
