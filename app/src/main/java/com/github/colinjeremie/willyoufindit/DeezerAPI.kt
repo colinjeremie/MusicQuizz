@@ -1,14 +1,10 @@
 package com.github.colinjeremie.willyoufindit
 
 import android.app.Application
-import android.content.Context
-
 import com.deezer.sdk.network.connect.DeezerConnect
 import com.deezer.sdk.network.request.DeezerRequestFactory
-import com.deezer.sdk.network.request.event.DeezerError
 import com.deezer.sdk.network.request.event.RequestListener
 import com.deezer.sdk.player.TrackPlayer
-import com.deezer.sdk.player.exception.TooManyPlayersExceptions
 import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker
 
 class DeezerAPI constructor(private val application: Application) {

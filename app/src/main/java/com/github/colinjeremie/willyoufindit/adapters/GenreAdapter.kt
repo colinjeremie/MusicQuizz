@@ -1,6 +1,5 @@
 package com.github.colinjeremie.willyoufindit.adapters
 
-import android.content.Context
 import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.widget.TextView
 import com.deezer.sdk.model.Genre
 import com.deezer.sdk.network.request.event.JsonRequestListener
 import com.deezer.sdk.network.request.event.RequestListener
-import com.github.colinjeremie.willyoufindit.DeezerAPI
 import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.utils.normalize

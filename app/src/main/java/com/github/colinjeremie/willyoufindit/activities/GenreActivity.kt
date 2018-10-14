@@ -12,7 +12,6 @@ import android.view.MenuItem
 import com.deezer.sdk.model.Radio
 import com.deezer.sdk.model.Track
 import com.deezer.sdk.network.request.event.JsonRequestListener
-import com.github.colinjeremie.willyoufindit.DeezerAPI
 import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.adapters.GenreAdapter

@@ -13,7 +13,6 @@ import com.deezer.sdk.network.request.event.DeezerError
 import com.deezer.sdk.player.TrackPlayer
 import com.deezer.sdk.player.event.PlayerState
 import com.deezer.sdk.player.exception.TooManyPlayersExceptions
-import com.github.colinjeremie.willyoufindit.DeezerAPI
 import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import java.util.*
