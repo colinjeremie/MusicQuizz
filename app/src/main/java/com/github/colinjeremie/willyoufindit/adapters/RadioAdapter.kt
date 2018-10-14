@@ -23,7 +23,7 @@ class RadioAdapter(private val onRadioClickListener: ((Radio) -> Unit)) : Recycl
 
     private var dataSet: MutableList<Radio> = mutableListOf()
 
-    val fetchRadiosListener: JsonRequestListener = object : JsonRequestListener() {
+    private val fetchRadiosListener: JsonRequestListener = object : JsonRequestListener() {
 
         override fun onResult(o: Any, o1: Any) {
             originalDataSet = (o as List<Radio>).distinctBy { it.id }.toMutableList()

@@ -5,7 +5,7 @@ import android.support.v4.view.ViewPager
 import com.github.colinjeremie.willyoufindit.BuildConfig
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.adapters.TutoAdapter
-import junit.framework.Assert
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
