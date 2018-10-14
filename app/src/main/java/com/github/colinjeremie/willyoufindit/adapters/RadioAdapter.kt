@@ -12,32 +12,20 @@ import com.bumptech.glide.Glide
 import com.deezer.sdk.model.Radio
 import com.deezer.sdk.network.request.event.JsonRequestListener
 import com.github.colinjeremie.willyoufindit.DeezerAPI
+import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.utils.normalize
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-/**
- * * WillYouFindIt
- * Created by jerem_000 on 4/1/2016.
- */
 class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
-    /**
-     * The original dataset returned from the Deezer API
-     */
     @VisibleForTesting
     var originalDataSet: MutableList<Radio> = mutableListOf()
 
-    /**
-     * The original values used by the adapter
-     */
     private var dataSet: MutableList<Radio> = mutableListOf()
 
-    /**
-     * Callback for the Deezer API after fetching the Radios
-     */
-    val listener: JsonRequestListener = object : JsonRequestListener() {
+    val fetchRadiosListener: JsonRequestListener = object : JsonRequestListener() {
 
         override fun onResult(o: Any, o1: Any) {
             originalDataSet = (o as List<Radio>).distinctBy { it.id }.toMutableList()
@@ -51,17 +39,10 @@ class RadioAdapter : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
         }
     }
 
-    /**
-     * Callback when an item has been clicked on
-     */
     var onRadioClickListener: ((Radio) -> Unit)? = null
 
-    /**
-     * Initialize the Adapter
-     * @param context Context
-     */
     fun init(context: Context) {
-        DeezerAPI.getInstance(context).getRadios(listener)
+        MyApplication.instance.deezerApi.getRadios(fetchRadiosListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RadioViewHolder {

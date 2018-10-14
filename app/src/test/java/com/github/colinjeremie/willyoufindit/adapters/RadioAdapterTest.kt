@@ -48,7 +48,7 @@ class RadioAdapterTest {
         Assert.assertEquals(0, adapter.itemCount)
 
         // When
-        adapter.listener.onResult(radios, any(Any::class.java))
+        adapter.fetchRadiosListener.onResult(radios, any(Any::class.java))
 
         // Then
         Assert.assertEquals(radios.size, adapter.itemCount)

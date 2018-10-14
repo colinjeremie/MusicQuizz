@@ -9,7 +9,7 @@ import com.github.colinjeremie.willyoufindit.fragments.PresentationFragmentStep3
 class TutoAdapter(fragmentManager: FragmentManager?) : FragmentStatePagerAdapter(fragmentManager) {
 
     companion object {
-        val COUNT = 3
+        const val COUNT = 3
     }
 
     override fun getItem(position: Int) =

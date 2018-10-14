@@ -14,6 +14,7 @@ import com.deezer.sdk.player.TrackPlayer
 import com.deezer.sdk.player.event.PlayerState
 import com.deezer.sdk.player.exception.TooManyPlayersExceptions
 import com.github.colinjeremie.willyoufindit.DeezerAPI
+import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import java.util.*
 
@@ -54,7 +55,7 @@ class PlayGameActivity : AppCompatActivity() {
 
     private fun initPlayer() {
         try {
-            trackPlayer = DeezerAPI.getInstance(this).getTrackPlayer(application)
+            trackPlayer = MyApplication.instance.deezerApi.trackPlayer
             trackPlayer?.addOnPlayerStateChangeListener { playerState, _ ->
                 if (playerState == PlayerState.PLAYBACK_COMPLETED) {
                     showPlayButton()

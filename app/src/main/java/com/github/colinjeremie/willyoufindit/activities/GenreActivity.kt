@@ -13,6 +13,7 @@ import com.deezer.sdk.model.Radio
 import com.deezer.sdk.model.Track
 import com.deezer.sdk.network.request.event.JsonRequestListener
 import com.github.colinjeremie.willyoufindit.DeezerAPI
+import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.adapters.GenreAdapter
 import java.util.*
@@ -65,7 +66,7 @@ class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         genresView.adapter = adapter
 
         adapter.onGenreClickListener = { genre ->
-            DeezerAPI.getInstance(this).getGenreRadios(genre.id, genreRadioListener)
+            MyApplication.instance.deezerApi.getGenreRadios(genre.id, genreRadioListener)
         }
 
         adapter.init(this)
@@ -105,7 +106,7 @@ class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     private fun requestTrackFromRadio(pRadio: Radio) {
-        DeezerAPI.getInstance(this).getRadioTracks(pRadio.id, trackListener)
+        MyApplication.instance.deezerApi.getRadioTracks(pRadio.id, trackListener)
     }
 
     override fun onQueryTextSubmit(query: String): Boolean {

@@ -11,6 +11,7 @@ import com.deezer.sdk.model.Genre
 import com.deezer.sdk.network.request.event.JsonRequestListener
 import com.deezer.sdk.network.request.event.RequestListener
 import com.github.colinjeremie.willyoufindit.DeezerAPI
+import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.utils.normalize
 import io.reactivex.Observable
@@ -19,19 +20,9 @@ import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
-    /**
-     * Listener when an item is clicked
-     */
     var onGenreClickListener: ((Genre) -> Unit)? = null
 
-    /**
-     * The data used for the adapter
-     */
     private var dataSet: MutableList<Genre> = ArrayList()
-
-    /**
-     * The original data
-     */
     private var originalDataSet: List<Genre> = mutableListOf()
 
     @VisibleForTesting
@@ -51,7 +42,7 @@ class GenreAdapter : RecyclerView.Adapter<GenreAdapter.GenresViewHolder>() {
 
 
     fun init(context: Context) {
-        DeezerAPI.getInstance(context).getGenres(listener)
+        MyApplication.instance.deezerApi.getGenres(listener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenresViewHolder {

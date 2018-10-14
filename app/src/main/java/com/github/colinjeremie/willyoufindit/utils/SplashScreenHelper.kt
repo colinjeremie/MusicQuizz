@@ -3,8 +3,8 @@ package com.github.colinjeremie.willyoufindit.utils
 import android.content.Context
 
 object SplashScreenHelper {
-    private val TUTO = "TUTO"
-    private val IS_FIRST_TIME_LAUNCHED = "IS_FIRST_TIME_LAUNCHED"
+    private const val TUTO = "TUTO"
+    private const val IS_FIRST_TIME_LAUNCHED = "IS_FIRST_TIME_LAUNCHED"
 
     fun tutoDone(pContext: Context) {
         val pref = pContext.getSharedPreferences(TUTO, Context.MODE_PRIVATE)

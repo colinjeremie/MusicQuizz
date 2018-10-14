@@ -11,27 +11,15 @@ import com.deezer.sdk.player.TrackPlayer
 import com.deezer.sdk.player.exception.TooManyPlayersExceptions
 import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker
 
-class DeezerAPI private constructor(context: Context) {
-    companion object {
-        private var instance: DeezerAPI? = null
-
-        fun getInstance(context: Context): DeezerAPI {
-            if (instance == null) {
-                instance = DeezerAPI(context)
-            }
-            return instance!!
-        }
+class DeezerAPI constructor(private val application: Application) {
+    private val deezerConnect by lazy {
+        DeezerConnect
+            .forApp(application.getString(R.string.deezer_app_id))
+            .withContext(application)
+            .build()
     }
-
-    private val deezerConnect = DeezerConnect.forApp(context.getString(R.string.deezer_app_id)).withContext(context).build()
-    private var trackPlayer: TrackPlayer? = null
-
-    @Throws(DeezerError::class, TooManyPlayersExceptions::class)
-    fun getTrackPlayer(application: Application): TrackPlayer {
-        if (trackPlayer == null) {
-            trackPlayer = TrackPlayer(application, deezerConnect, WifiAndMobileNetworkStateChecker())
-        }
-        return trackPlayer!!
+    val trackPlayer: TrackPlayer by lazy {
+        TrackPlayer(application, deezerConnect, WifiAndMobileNetworkStateChecker())
     }
 
     fun getGenres(requestListener: RequestListener) {

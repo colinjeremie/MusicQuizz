@@ -14,6 +14,7 @@ import android.view.View
 import com.deezer.sdk.model.Track
 import com.deezer.sdk.network.request.event.JsonRequestListener
 import com.github.colinjeremie.willyoufindit.DeezerAPI
+import com.github.colinjeremie.willyoufindit.MyApplication
 import com.github.colinjeremie.willyoufindit.R
 import com.github.colinjeremie.willyoufindit.adapters.RadioAdapter
 import java.util.*
@@ -47,7 +48,7 @@ class RadioActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         genresView.adapter = adapter
 
         adapter.onRadioClickListener = { radio ->
-            DeezerAPI.getInstance(RadioActivity@ this).getRadioTracks(radio.id, trackListener)
+            MyApplication.instance.deezerApi.getRadioTracks(radio.id, trackListener)
         }
         adapter.init(this)
     }
