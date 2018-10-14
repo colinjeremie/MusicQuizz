@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ProgressBar
 import com.deezer.sdk.model.Radio
 import com.deezer.sdk.model.Track
 import com.deezer.sdk.network.request.event.JsonRequestListener
@@ -20,9 +22,12 @@ import java.util.*
 class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private val adapter: GenreAdapter by lazy {
-        GenreAdapter { genre ->
+        GenreAdapter({ genre ->
             MyApplication.instance.deezerApi.getGenreRadios(genre.id, genreRadioListener)
-        }
+        }, { isLoading ->
+            loaderView.visibility = if (isLoading) View.VISIBLE else View.GONE
+            recyclerView.visibility = if (isLoading) View.GONE else View.VISIBLE
+        })
     }
     private val genreRadioListener = object : JsonRequestListener() {
 
@@ -60,13 +65,15 @@ class GenreActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
     }
 
+    private val loaderView: ProgressBar by lazy { findViewById<ProgressBar>(R.id.progress_bar) }
+    private val recyclerView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_genre)
 
-        val genresView = findViewById<RecyclerView>(R.id.recycler_view)
-        genresView.layoutManager = LinearLayoutManager(this)
-        genresView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
 
         adapter.fetchGenres()
     }

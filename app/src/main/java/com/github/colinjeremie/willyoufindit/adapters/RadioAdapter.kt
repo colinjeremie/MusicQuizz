@@ -17,7 +17,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class RadioAdapter(private val onRadioClickListener: ((Radio) -> Unit)) : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
+class RadioAdapter(private val onRadioClickListener: ((Radio) -> Unit), private val loadingCallback: (Boolean) -> Unit) : RecyclerView.Adapter<RadioAdapter.RadioViewHolder>() {
     @VisibleForTesting
     var originalDataSet: MutableList<Radio> = mutableListOf()
 
@@ -28,16 +28,20 @@ class RadioAdapter(private val onRadioClickListener: ((Radio) -> Unit)) : Recycl
         override fun onResult(o: Any, o1: Any) {
             originalDataSet = (o as List<Radio>).distinctBy { it.id }.toMutableList()
             clearFilter()
+            loadingCallback.invoke(false)
         }
 
         override fun onUnparsedResult(s: String, o: Any) {
+            loadingCallback.invoke(false)
         }
 
         override fun onException(e: Exception, o: Any) {
+            loadingCallback.invoke(false)
         }
     }
 
     fun fetchRadios() {
+        loadingCallback.invoke(true)
         MyApplication.instance.deezerApi.getRadios(fetchRadiosListener)
     }
 

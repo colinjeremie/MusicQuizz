@@ -11,6 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ProgressBar
 import com.deezer.sdk.model.Track
 import com.deezer.sdk.network.request.event.JsonRequestListener
 import com.github.colinjeremie.willyoufindit.MyApplication
@@ -20,9 +21,12 @@ import java.util.*
 
 class RadioActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private val adapter: RadioAdapter by lazy {
-        RadioAdapter { radio ->
+        RadioAdapter({ radio ->
             MyApplication.instance.deezerApi.getRadioTracks(radio.id, trackListener)
-        }
+        }, { isLoading ->
+            loaderView.visibility = if (isLoading) View.VISIBLE else View.GONE
+            recyclerView.visibility = if (isLoading) View.GONE else View.VISIBLE
+        })
     }
 
     private val trackListener = object : JsonRequestListener() {
@@ -42,13 +46,16 @@ class RadioActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
     }
 
+    private val loaderView: ProgressBar by lazy { findViewById<ProgressBar>(R.id.progress_bar) }
+    private val recyclerView: RecyclerView by lazy { findViewById<RecyclerView>(R.id.recycler_view) }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_radio)
+        setContentView(R.layout.activity_genre)
 
-        val genresView = findViewById<View>(R.id.recycler_view) as RecyclerView
-        genresView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-        genresView.adapter = adapter
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        recyclerView.adapter = adapter
 
         adapter.fetchRadios()
     }
