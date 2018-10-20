@@ -13,6 +13,8 @@
         android:supportsRtl="true"
         android:name=".MyApplication"
         android:theme="@style/AppTheme">
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
         <activity
             android:screenOrientation="portrait"
             android:name=".activities.SplashScreenActivity"
